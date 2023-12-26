@@ -9,6 +9,7 @@ import AdminSignup from "./Pages/Admin/AdminSignup";
 import UserForgot from "./Pages/Users/UserForgot";
 import ManagerForgot from "./Pages/Manager/ManagerForgot";
 import AdminForgot from "./Pages/Admin/AdminForgot";
+import UserUpdatePassword from "./Pages/Users/UserUpdatePassword";
 
 function App() {
   return (
@@ -17,12 +18,29 @@ function App() {
         <Route exact path="/" element={<UserLogin />} />
         <Route exact path="/signup" element={<UserSignup />} />
         <Route exact path="/forgot" element={<UserForgot />} />
+        <Route
+          exact
+          path="user/update/:id/:token"
+          element={<UserUpdatePassword />}
+        />
+
         <Route exact path="/manager" element={<ManagerLogin />} />
         <Route exact path="/manager/signup" element={<ManagerSignup />} />
         <Route exact path="/manager/forgot" element={<ManagerForgot />} />
+        <Route
+          exact
+          path="/manager/update/:id/:token"
+          element={<AdminForgot />}
+        />
+
         <Route exact path="/admin" element={<AdminLogin />} />
         <Route exact path="/admin/signup" element={<AdminSignup />} />
         <Route exact path="/admin/forgot" element={<AdminForgot />} />
+        <Route
+          exact
+          path="/admin/update/:id/:token"
+          element={<AdminForgot />}
+        />
       </Routes>
     </>
   );
