@@ -26,7 +26,7 @@ const UpdatePassword = ({ mes, err, setErr, setMes, handleUpdate }) => {
       <div className="flex flex-col items-center justify-center gap-5">
         <div className="relative flex flex-col sm:w-72 w-60">
           <input
-            type="text"
+            type="password"
             placeholder="New Password"
             name="newPassword"
             value={userData.newPassword}
@@ -40,7 +40,7 @@ const UpdatePassword = ({ mes, err, setErr, setMes, handleUpdate }) => {
 
         <div className="relative flex flex-col sm:w-72 w-60">
           <input
-            type="text"
+            type="password"
             placeholder="Confirm Password"
             name="confirmNewPassword"
             value={userData.confirmNewPassword}

@@ -92,7 +92,7 @@ const Signup = ({
         </div>
         <div className="relative flex flex-col sm:w-72 w-60">
           <input
-            type="text"
+            type="password"
             placeholder="Password"
             name="password"
             value={userData.password}
