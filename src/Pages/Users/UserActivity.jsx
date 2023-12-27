@@ -1,19 +1,17 @@
-import Dashboard from "../../Components/Dashboard";
+import Activity from "../../Components/Activity";
 import NavBar from "../../Components/NavBar";
 
-const UserDashboard = () => {
-  const role = "user";
-
+const UserActivity = () => {
   return (
     <div className="flex flex-col w-full md:flex-row">
       <div className="md:min-h-screen">
-        <NavBar role={role} />
+        <NavBar />
       </div>
       <div className="w-full min-h-screen bg-sky-300">
-        <Dashboard />
+        <Activity />
       </div>
     </div>
   );
 };
 
-export default UserDashboard;
+export default UserActivity;

@@ -32,6 +32,7 @@ const ManagerLogin = () => {
         if (val.acknowledged) {
           setErr("");
           setMes(val.message);
+          navigate("/manager/dashboard", { replace: true });
         } else {
           if (val.active) {
             setResend(true);

@@ -32,6 +32,7 @@ const AdminLogin = () => {
         if (val.acknowledged) {
           setErr("");
           setMes(val.message);
+          navigate("/admin/dashboard", { replace: true });
         } else {
           if (val.active) {
             setResend(true);

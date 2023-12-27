@@ -14,6 +14,9 @@ import ManagerUpdatePassword from "./Pages/Manager/ManagerUpdatePassword";
 import AdminUpdatePassword from "./Pages/Admin/AdminUpdatePassword";
 import UserDashboard from "./Pages/Users/UserDashboard";
 import UserProfile from "./Pages/Users/UserProfile";
+import ManagerProfile from "./Pages/Manager/ManagerProfile";
+import ManagerDashboard from "./Pages/Manager/ManagerDashboard";
+import UserActivity from "./Pages/Users/UserActivity";
 
 function App() {
   return (
@@ -22,17 +25,20 @@ function App() {
         <Route exact path="/" element={<UserLogin />} />
         <Route exact path="/signup" element={<UserSignup />} />
         <Route exact path="/forgot" element={<UserForgot />} />
+        <Route exact path="/user/dashboard" element={<UserDashboard />} />
+        <Route exact path="/user/profile" element={<UserProfile />} />
+        <Route exact path="/user/activity" element={<UserActivity />} />
         <Route
           exact
           path="/user/update/:id/:token"
           element={<UserUpdatePassword />}
         />
-        <Route exact path="/user/dashboard" element={<UserDashboard />} />
-        <Route exact path="/user/profile" element={<UserProfile />} />
 
         <Route exact path="/manager" element={<ManagerLogin />} />
         <Route exact path="/manager/signup" element={<ManagerSignup />} />
         <Route exact path="/manager/forgot" element={<ManagerForgot />} />
+        <Route exact path="/manager/dashboard" element={<ManagerDashboard />} />
+        <Route exact path="/manager/profile" element={<ManagerProfile />} />
         <Route
           exact
           path="/manager/update/:id/:token"
@@ -42,6 +48,8 @@ function App() {
         <Route exact path="/admin" element={<AdminLogin />} />
         <Route exact path="/admin/signup" element={<AdminSignup />} />
         <Route exact path="/admin/forgot" element={<AdminForgot />} />
+        <Route exact path="/admin/dashboard" element={<UserDashboard />} />
+        <Route exact path="/admin/profile" element={<UserProfile />} />
         <Route
           exact
           path="/admin/update/:id/:token"

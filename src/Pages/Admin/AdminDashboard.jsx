@@ -1,8 +1,8 @@
-import Dashboard from "../../Components/Dashboard";
 import NavBar from "../../Components/NavBar";
+import Dashboard from "../../Components/Dashboard";
 
-const UserDashboard = () => {
-  const role = "user";
+const AdminDashboard = () => {
+  const role = "admin";
 
   return (
     <div className="flex flex-col w-full md:flex-row">
@@ -16,4 +16,4 @@ const UserDashboard = () => {
   );
 };
 
-export default UserDashboard;
+export default AdminDashboard;

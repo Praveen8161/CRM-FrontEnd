@@ -31,6 +31,7 @@ const UserLogin = () => {
         if (val.acknowledged) {
           setErr("");
           setMes(val.message);
+          navigate("/user/dashboard", { replace: true });
         } else {
           if (val.active) {
             setResend(true);
