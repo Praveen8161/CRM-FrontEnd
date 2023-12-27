@@ -10,6 +10,10 @@ import UserForgot from "./Pages/Users/UserForgot";
 import ManagerForgot from "./Pages/Manager/ManagerForgot";
 import AdminForgot from "./Pages/Admin/AdminForgot";
 import UserUpdatePassword from "./Pages/Users/UserUpdatePassword";
+import ManagerUpdatePassword from "./Pages/Manager/ManagerUpdatePassword";
+import AdminUpdatePassword from "./Pages/Admin/AdminUpdatePassword";
+import UserDashboard from "./Pages/Users/UserDashboard";
+import UserProfile from "./Pages/Users/UserProfile";
 
 function App() {
   return (
@@ -20,9 +24,11 @@ function App() {
         <Route exact path="/forgot" element={<UserForgot />} />
         <Route
           exact
-          path="user/update/:id/:token"
+          path="/user/update/:id/:token"
           element={<UserUpdatePassword />}
         />
+        <Route exact path="/user/dashboard" element={<UserDashboard />} />
+        <Route exact path="/user/profile" element={<UserProfile />} />
 
         <Route exact path="/manager" element={<ManagerLogin />} />
         <Route exact path="/manager/signup" element={<ManagerSignup />} />
@@ -30,7 +36,7 @@ function App() {
         <Route
           exact
           path="/manager/update/:id/:token"
-          element={<AdminForgot />}
+          element={<ManagerUpdatePassword />}
         />
 
         <Route exact path="/admin" element={<AdminLogin />} />
@@ -39,7 +45,7 @@ function App() {
         <Route
           exact
           path="/admin/update/:id/:token"
-          element={<AdminForgot />}
+          element={<AdminUpdatePassword />}
         />
       </Routes>
     </>
