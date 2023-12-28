@@ -52,7 +52,6 @@ const Profile = ({ updateProfile, mes, err, setErr, setMes, role }) => {
     })
       .then((val) => val.json())
       .then((val) => {
-        console.log(val);
         if (val.acknowledged) {
           setUserData({
             email: val.user.email,
