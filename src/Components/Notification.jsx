@@ -55,6 +55,7 @@ const Notification = ({ role }) => {
       .then((val) => val.json())
       .then((val) => {
         if (val.acknowledged) {
+          setNotify((prev) => [...prev, val.data]);
           alert("Notification Sent Successfully");
           setShowAdd(false);
         } else {
@@ -122,7 +123,7 @@ const Notification = ({ role }) => {
           <div className="font-semibold">No Notification found</div>
         ) : (
           <div className="mx-5 space-y-2">
-            {notify.map((val, idx) => (
+            {notify.reverse().map((val, idx) => (
               <div
                 onClick={() => handleRead(val._id)}
                 key={idx}

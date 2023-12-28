@@ -20,6 +20,34 @@ const Ticket = ({ role }) => {
   const [err, setErr] = useState("");
 
   const URLCreate = `${API}/${role}/ticket/create`;
+  const URLDel = `${API}/${role}/ticket/delete`;
+
+  function handleDeleteTicket(ticketId) {
+    fetch(URLDel, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        sessionToken: localStorage.getItem("CRMSes"),
+        ticketId: ticketId,
+      }),
+    })
+      .then((val) => val.json())
+      .then((val) => {
+        if (val.acknowledged) {
+          const updatedTicket = ticketData.filter((data) => {
+            return data._id !== ticketId;
+          });
+
+          setTicketData(updatedTicket);
+          alert(val.message);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
 
   function handleTicket(ticData) {
     fetch(URLCreate, {
@@ -108,9 +136,9 @@ const Ticket = ({ role }) => {
         {ticketData.length < 1 ? (
           <div className="font-semibold text-center">No Tickets Found</div>
         ) : (
-          ticketData.map((val, idx) => (
+          ticketData.map((val) => (
             <div
-              key={idx}
+              key={val._id}
               className="sm:min-w-[280px] min-w-270px flex flex-col items-start justify-start px-3 py-2 rounded-md  bg-slate-100"
             >
               <p>
@@ -131,27 +159,42 @@ const Ticket = ({ role }) => {
                   {new Date(val.createdAt).toISOString().split("T")[0]}
                 </span>
               </p>
-              {role !== "user" ? (
-                <button
-                  onClick={() => {
-                    setShowres(true);
-                    setResData({
-                      name: val.ticketName,
-                      number: val.ticketNumber,
-                      message: val.ticketMessage,
-                      createdAt: val.createdAt,
-                      _id: val._id,
-                    });
-                  }}
-                  className={`px-3 relative py-1 text-white  rounded hover:bg-green-500 active:top-[-2px] ${
-                    val.resolvedBy ? "bg-green-600" : "bg-red-600"
-                  }`}
-                >
-                  {val.resolvedBy ? "Cleared" : "Resolve"}
-                </button>
-              ) : (
-                ""
-              )}
+              <div className="flex flex-row justify-around w-full gap-2">
+                {role !== "user" ? (
+                  <button
+                    onClick={() => {
+                      setShowres(true);
+                      setResData({
+                        name: val.ticketName,
+                        number: val.ticketNumber,
+                        message: val.ticketMessage,
+                        createdAt: val.createdAt,
+                        _id: val._id,
+                      });
+                    }}
+                    className={`px-3 relative py-1 text-white  rounded hover:bg-green-500 active:top-[-2px] ${
+                      val.resolvedBy ? "bg-green-600" : "bg-red-600"
+                    }`}
+                  >
+                    {val.resolvedBy ? "Cleared" : "Resolve"}
+                  </button>
+                ) : (
+                  ""
+                )}
+
+                {role === "admin" ? (
+                  <button
+                    onClick={() => {
+                      handleDeleteTicket(val._id);
+                    }}
+                    className={`px-3 relative py-1 text-white  rounded hover:bg-red-800 bg-red-800 active:top-[-2px]`}
+                  >
+                    Delete
+                  </button>
+                ) : (
+                  ""
+                )}
+              </div>
             </div>
           ))
         )}

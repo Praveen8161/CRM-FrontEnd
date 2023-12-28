@@ -25,7 +25,7 @@ const NavBar = ({ role }) => {
   }
 
   return (
-    <div className="h-full bg-blue-500">
+    <div className="h-full max-h-[100vh] bg-blue-500">
       <div className="flex justify-end px-1 py-1 sm:px-3 md:hidden">
         <div onClick={() => setShow((prev) => !prev)}>
           <RiMenu3Fill size={30} />

@@ -10,7 +10,7 @@ const ManagerService = () => {
         <NavBar role={role} />
       </div>
       <div className="w-full min-h-screen bg-sky-300">
-        <Service />
+        <Service role={role} />
       </div>
     </div>
   );
