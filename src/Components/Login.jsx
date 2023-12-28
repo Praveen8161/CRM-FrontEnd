@@ -53,7 +53,7 @@ const Login = ({
 
   return (
     <div className="flex flex-col gap-3 m-auto justify-center items-center px-3 sm:px-5 rounded-lg shadow-[rgba(50,_50,_105,_0.15)_0px_2px_5px_0px,_rgba(0,_0,_0,_0.05)_0px_1px_1px_0px] pt-3 pb-5 bg-slate-200 max-w-[320px]">
-      <div className="text-lg font-semibold md:text-xl">{`${name} Login`}</div>
+      <div className="text-lg font-semibold capitalize md:text-xl">{`${name} Login`}</div>
       <div className="flex flex-col items-center justify-center gap-5">
         <div className="relative flex flex-col sm:w-72 w-60">
           <input
@@ -113,12 +113,10 @@ const Login = ({
 
       <button
         onClick={() => {
-          if (name === "User") {
+          if (name === "user") {
             navigate("/forgot");
-          } else if (name === "Manager") {
-            navigate("/manager/forgot");
-          } else if (name === "Admin") {
-            navigate("/admin/forgot");
+          } else {
+            navigate(`/${name}/forgot`);
           }
         }}
         className="text-xs"

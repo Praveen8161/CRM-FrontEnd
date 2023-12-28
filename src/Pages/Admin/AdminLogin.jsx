@@ -7,7 +7,7 @@ const AdminLogin = () => {
   const URLLogin = `${API}/admin/login`;
   const URLResend = `${API}/admin/resendemail`;
 
-  const name = "Admin";
+  const name = "admin";
   const [mes, setMes] = useState("");
   const [err, setErr] = useState("");
   const [resend, setResend] = useState("");

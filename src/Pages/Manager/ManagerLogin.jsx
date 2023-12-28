@@ -7,7 +7,7 @@ const ManagerLogin = () => {
   const URLLogin = `${API}/manager/login`;
   const URLResend = `${API}/manager/resendemail`;
 
-  const name = "Manager";
+  const name = "manager";
   const [mes, setMes] = useState("");
   const [err, setErr] = useState("");
   const [resend, setResend] = useState("");

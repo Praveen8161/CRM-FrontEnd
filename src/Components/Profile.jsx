@@ -1,7 +1,9 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react/prop-types */
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { API } from "../helpers/API";
 
-const Profile = ({ updateProfile, mes, err, setErr, setMes }) => {
+const Profile = ({ updateProfile, mes, err, setErr, setMes, role }) => {
   const [userData, setUserData] = useState({
     email: "",
     first_name: "",
@@ -39,6 +41,32 @@ const Profile = ({ updateProfile, mes, err, setErr, setMes }) => {
     updateProfile(userData);
   }
 
+  const URL = `${API}/${role}/check`;
+  useEffect(() => {
+    fetch(URL, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ sessionToken: localStorage.getItem("CRMSes") }),
+    })
+      .then((val) => val.json())
+      .then((val) => {
+        console.log(val);
+        if (val.acknowledged) {
+          setUserData({
+            email: val.user.email,
+            first_name: val.user.first_name,
+            last_name: val.user.last_name,
+            phoneNumber: val.user.phoneNumber,
+          });
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
+
   return (
     <div className="flex flex-col items-center justify-center w-full h-full gap-6">
       <p className="text-2xl font-bold">Profile</p>
@@ -49,6 +77,7 @@ const Profile = ({ updateProfile, mes, err, setErr, setMes }) => {
             type="text"
             placeholder="Email"
             name="email"
+            value={userData.email}
             disabled
             className="bg-gray-300 border border-gray-300 text-black text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
           />

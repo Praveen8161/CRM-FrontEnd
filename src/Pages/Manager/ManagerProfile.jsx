@@ -47,6 +47,7 @@ const ManagerProfile = () => {
           err={err}
           setErr={setErr}
           setMes={setMes}
+          role={role}
         />
       </div>
     </div>

@@ -8,8 +8,8 @@ import { IoTicketOutline } from "react-icons/io5";
 import { GrServices } from "react-icons/gr";
 import { IoMdNotificationsOutline } from "react-icons/io";
 import { FiActivity } from "react-icons/fi";
-import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 
 const NavBar = ({ role }) => {
   const navigate = useNavigate();
@@ -114,7 +114,12 @@ const NavBar = ({ role }) => {
             className={`flex mb-5 cursor-pointer ${show ? " justify-end" : ""}`}
           >
             {show ? (
-              <RiMenuFoldLine size={30} />
+              <div className="flex flex-row justify-between w-full">
+                <p>
+                  Hi <span>{"first_name"}</span>
+                </p>
+                <RiMenuFoldLine size={30} />
+              </div>
             ) : (
               <RiMenuUnfoldLine size={30} />
             )}

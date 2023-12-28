@@ -6,7 +6,7 @@ import { useState } from "react";
 const UserLogin = () => {
   const URLLogin = `${API}/user/login`;
   const URLResend = `${API}/user/resendemail`;
-  const name = "User";
+  const name = "user";
   const [mes, setMes] = useState("");
   const [err, setErr] = useState("");
   const [resend, setResend] = useState("");
@@ -31,6 +31,7 @@ const UserLogin = () => {
         if (val.acknowledged) {
           setErr("");
           setMes(val.message);
+          localStorage.setItem("CRMSes", val.sessionToken);
           navigate("/user/dashboard", { replace: true });
         } else {
           if (val.active) {

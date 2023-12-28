@@ -48,6 +48,7 @@ const AdminProfile = () => {
           err={err}
           setErr={setErr}
           setMes={setMes}
+          role={role}
         />
       </div>
     </div>

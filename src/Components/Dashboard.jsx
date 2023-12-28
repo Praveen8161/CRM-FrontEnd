@@ -1,7 +1,33 @@
+/* eslint-disable react/prop-types */
 import { IoTicketOutline } from "react-icons/io5";
 import { GrServices } from "react-icons/gr";
+import { useEffect, useState } from "react";
+import { API } from "../helpers/API";
 
-const Dashboard = () => {
+const Dashboard = ({ role }) => {
+  const URL = `${API}/${role}/ticket`;
+  const [ticketData, setTicketData] = useState(0);
+  useEffect(() => {
+    fetch(URL, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ sessionToken: localStorage.getItem("CRMSes") }),
+    })
+      .then((val) => val.json())
+      .then((val) => {
+        console.log(val);
+        if (val.acknowledged) {
+          setTicketData(val.ticktes.length);
+        } else {
+          setTicketData(val.message);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
   return (
     <div className="w-full h-full">
       <div className="flex flex-col items-center justify-center gap-3 px-3 py-3 text-xl font-semibold md:justify-around md:flex md:flex-row">
@@ -14,7 +40,7 @@ const Dashboard = () => {
           </h1>
           <div className="flex flex-row gap-2">
             <span>Total Tickets:</span>
-            <span className="font-normal">30</span>
+            <span className="font-normal">{ticketData}</span>
           </div>
           <div className="flex flex-row gap-2">
             <span>Resolved Tickets:</span>
