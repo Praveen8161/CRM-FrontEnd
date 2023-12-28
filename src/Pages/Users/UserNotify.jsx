@@ -9,7 +9,7 @@ const UserNotify = () => {
         <NavBar role={role} />
       </div>
       <div className="w-full min-h-screen bg-sky-300">
-        <Notification />
+        <Notification role={role} />
       </div>
     </div>
   );

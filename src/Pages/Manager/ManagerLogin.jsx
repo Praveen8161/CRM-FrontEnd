@@ -28,10 +28,10 @@ const ManagerLogin = () => {
     })
       .then((val) => val.json())
       .then((val) => {
-        console.log(val);
         if (val.acknowledged) {
           setErr("");
           setMes(val.message);
+          localStorage.setItem("CRMSes", val.sessionToken);
           navigate("/manager/dashboard", { replace: true });
         } else {
           if (val.active) {

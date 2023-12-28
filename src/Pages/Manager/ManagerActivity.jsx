@@ -9,7 +9,7 @@ const ManagerActivity = () => {
         <NavBar role={role} />
       </div>
       <div className="w-full min-h-screen bg-sky-300">
-        <Activity />
+        <Activity role={role} />
       </div>
     </div>
   );

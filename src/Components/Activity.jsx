@@ -4,9 +4,9 @@ import { API } from "../helpers/API";
 
 /* eslint-disable react/prop-types */
 const Activity = ({ role }) => {
-  const URL = `${API}/${role}/check`;
   const [acti, setActi] = useState([]);
 
+  const URL = `${API}/${role}/check`;
   useEffect(() => {
     fetch(URL, {
       method: "POST",
@@ -34,7 +34,12 @@ const Activity = ({ role }) => {
       ) : (
         acti.map((val, idx) => (
           <div key={idx} className="px-2 py-1 rounded-md bg-slate-100">
-            {val}
+            {
+              new Date(Number(val))
+                .toISOString()
+                .replace("T", " ")
+                .split(".")[0]
+            }
           </div>
         ))
       )}

@@ -10,7 +10,7 @@ const UserTicket = () => {
         <NavBar role={role} />
       </div>
       <div className="w-full min-h-screen bg-sky-300">
-        <Ticket />
+        <Ticket role={role} />
       </div>
     </div>
   );

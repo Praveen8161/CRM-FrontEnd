@@ -16,7 +16,10 @@ const UserProfile = () => {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(userData),
+      body: JSON.stringify({
+        ...userData,
+        sessionToken: localStorage.getItem("CRMSes"),
+      }),
     })
       .then((val) => val.json())
       .then((val) => {
