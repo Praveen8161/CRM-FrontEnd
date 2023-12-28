@@ -34,7 +34,7 @@ const UserForgot = () => {
       .then((val) => {
         if (val.acknowledged) {
           setErr("");
-          setMes(val.message);
+          setMes(`${val.message} and ${val.valid}`);
         } else {
           setMes("");
           setErr(val.error);

@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { RiMenuUnfoldLine, RiMenuFoldLine } from "react-icons/ri";
 import { RiMenu3Fill } from "react-icons/ri";
 import { RiLogoutCircleLine } from "react-icons/ri";
@@ -8,9 +9,21 @@ import { GrServices } from "react-icons/gr";
 import { IoMdNotificationsOutline } from "react-icons/io";
 import { FiActivity } from "react-icons/fi";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
-const NavBar = () => {
+const NavBar = ({ role }) => {
+  const navigate = useNavigate();
   const [show, setShow] = useState(false);
+
+  function handleLogout() {
+    localStorage.removeItem("CRMSes");
+    if (role === "user") {
+      navigate("/", { replace: true });
+    } else {
+      navigate(`/${role}`, { replace: true });
+    }
+  }
+
   return (
     <div className="h-full bg-blue-500">
       <div className="flex justify-end px-1 py-1 sm:px-3 md:hidden">
@@ -24,43 +37,64 @@ const NavBar = () => {
               : "left-[-900px]"
           } `}
         >
-          <li className="relative flex flex-row gap-2 cursor-pointer active:top-[2px] items-center">
+          <li
+            onClick={() => navigate(`/${role}/dashboard`)}
+            className="relative flex flex-row gap-2 cursor-pointer active:top-[2px] items-center"
+          >
             <span>
               <MdOutlineDashboardCustomize size={25} />
             </span>
             <span>Dashboard</span>
           </li>
-          <li className="relative flex flex-row gap-2 cursor-pointer active:top-[2px] items-center">
+          <li
+            onClick={() => navigate(`/${role}/profile`)}
+            className="relative flex flex-row gap-2 cursor-pointer active:top-[2px] items-center"
+          >
             <span>
               <FaRegUserCircle size={25} />
             </span>
             <span>Profile</span>
           </li>
-          <li className="relative flex flex-row gap-2 cursor-pointer active:top-[2px] items-center">
+          <li
+            onClick={() => navigate(`/${role}/ticket`)}
+            className="relative flex flex-row gap-2 cursor-pointer active:top-[2px] items-center"
+          >
             <span>
               <IoTicketOutline size={25} />
             </span>
             <span>Tickets</span>
           </li>
-          <li className="relative flex flex-row gap-2 cursor-pointer active:top-[2px] items-center">
+          <li
+            onClick={() => navigate(`/${role}/service`)}
+            className="relative flex flex-row gap-2 cursor-pointer active:top-[2px] items-center"
+          >
             <span>
               <GrServices size={25} />
             </span>
             <span>Services</span>
           </li>
-          <li className="relative flex flex-row gap-2 cursor-pointer active:top-[2px] items-center">
+          <li
+            onClick={() => navigate(`/${role}/notification`)}
+            className="relative flex flex-row gap-2 cursor-pointer active:top-[2px] items-center"
+          >
             <span>
               <IoMdNotificationsOutline size={25} />
             </span>
             <span>Notification</span>
           </li>
-          <li className="relative flex flex-row gap-2 cursor-pointer active:top-[2px] items-center">
+          <li
+            onClick={() => navigate(`/${role}/activity`)}
+            className="relative flex flex-row gap-2 cursor-pointer active:top-[2px] items-center"
+          >
             <span>
               <FiActivity size={25} />
             </span>
             <span>Activity</span>
           </li>
-          <li className="flex flex-row w-full h-16 gap-2 min-h-max cursor-pointer active:top-[2px] relative items-center">
+          <li
+            onClick={handleLogout}
+            className="flex flex-row w-full h-16 gap-2 min-h-max cursor-pointer active:top-[2px] relative items-center"
+          >
             <span>
               <RiLogoutCircleLine size={25} />
             </span>
@@ -86,7 +120,10 @@ const NavBar = () => {
             )}
           </div>
           <ul className="flex flex-col w-full gap-8">
-            <li className="relative flex flex-row gap-2 cursor-pointer active:top-[2px] items-center">
+            <li
+              onClick={() => navigate(`/${role}/dashboard`)}
+              className="relative flex flex-row gap-2 cursor-pointer active:top-[2px] items-center"
+            >
               <span className="hover:top-[-2px] hover:relative">
                 <MdOutlineDashboardCustomize size={25} />
               </span>
@@ -100,7 +137,10 @@ const NavBar = () => {
                 Dashboard
               </span>
             </li>
-            <li className="relative flex flex-row gap-2 cursor-pointer active:top-[2px] items-center">
+            <li
+              onClick={() => navigate(`/${role}/profile`)}
+              className="relative flex flex-row gap-2 cursor-pointer active:top-[2px] items-center"
+            >
               <span className="hover:top-[-2px] hover:relative">
                 <FaRegUserCircle size={25} />
               </span>
@@ -114,7 +154,10 @@ const NavBar = () => {
                 Profile
               </span>
             </li>
-            <li className="relative flex flex-row gap-2 cursor-pointer active:top-[2px] items-center">
+            <li
+              onClick={() => navigate(`/${role}/ticket`)}
+              className="relative flex flex-row gap-2 cursor-pointer active:top-[2px] items-center"
+            >
               <span className="hover:top-[-2px] hover:relative">
                 <IoTicketOutline size={25} />
               </span>
@@ -128,7 +171,10 @@ const NavBar = () => {
                 Tickets
               </span>
             </li>
-            <li className="relative flex flex-row gap-2 cursor-pointer active:top-[2px] items-center">
+            <li
+              onClick={() => navigate(`/${role}/service`)}
+              className="relative flex flex-row gap-2 cursor-pointer active:top-[2px] items-center"
+            >
               <span className="hover:top-[-2px] hover:relative">
                 <GrServices size={25} />
               </span>
@@ -142,7 +188,10 @@ const NavBar = () => {
                 Services
               </span>
             </li>
-            <li className="relative flex flex-row gap-2 cursor-pointer active:top-[2px] items-center">
+            <li
+              onClick={() => navigate(`/${role}/notification`)}
+              className="relative flex flex-row gap-2 cursor-pointer active:top-[2px] items-center"
+            >
               <span className="hover:top-[-2px] hover:relative">
                 <IoMdNotificationsOutline size={25} />
               </span>
@@ -156,7 +205,10 @@ const NavBar = () => {
                 Notification
               </span>
             </li>
-            <li className="relative flex flex-row gap-2 cursor-pointer active:top-[2px] items-center">
+            <li
+              onClick={() => navigate(`/${role}/activity`)}
+              className="relative flex flex-row gap-2 cursor-pointer active:top-[2px] items-center"
+            >
               <span className="hover:top-[-2px] hover:relative">
                 <FiActivity size={25} />
               </span>
@@ -174,7 +226,10 @@ const NavBar = () => {
         </div>
 
         <div>
-          <button className="flex flex-row w-full h-16 gap-2 min-h-max cursor-pointer active:top-[2px] relative items-center">
+          <button
+            onClick={handleLogout}
+            className="flex flex-row w-full h-16 gap-2 min-h-max cursor-pointer active:top-[2px] relative items-center"
+          >
             <span className="hover:top-[-2px] hover:relative">
               <RiLogoutCircleLine size={25} />
             </span>

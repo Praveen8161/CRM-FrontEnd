@@ -1,8 +1,8 @@
 import Activity from "../../Components/Activity";
 import NavBar from "../../Components/NavBar";
 
-const UserActivity = () => {
-  const role = "user";
+const AdminActivity = () => {
+  const role = "admin";
   return (
     <div className="flex flex-col w-full md:flex-row">
       <div className="md:min-h-screen">
@@ -15,4 +15,4 @@ const UserActivity = () => {
   );
 };
 
-export default UserActivity;
+export default AdminActivity;
