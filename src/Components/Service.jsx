@@ -157,7 +157,7 @@ const Service = ({ role, handleSerDel }) => {
   }
 
   return (
-    <div className="flex flex-col max-h-[100vh] overflow-y-auto items-center justify-start w-full h-full gap-3 py-5 sm:gap-6">
+    <div className="flex scrollbar-hide flex-col max-h-[100vh] overflow-y-auto items-center justify-start w-full h-full gap-3 py-5 sm:gap-6">
       {/* Create service only by Admin */}
       <div className={`w-full ${role != "admin" ? "hidden" : ""}`}>
         {showAdd ? (

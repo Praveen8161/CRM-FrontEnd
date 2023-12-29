@@ -116,7 +116,7 @@ const Ticket = ({ role }) => {
   }
 
   return (
-    <div className="flex flex-col max-h-[100vh] overflow-y-auto items-center justify-start w-full h-full gap-3 p-5 sm:gap-6">
+    <div className="flex flex-col scrollbar-hide max-h-[100vh] overflow-y-auto items-center justify-start w-full h-full gap-3 p-5 sm:gap-6">
       <div className={`w-full ${role != "user" ? "hidden" : ""}`}>
         {showAdd ? (
           <div className="w-full">

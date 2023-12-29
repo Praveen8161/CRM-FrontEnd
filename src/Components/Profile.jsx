@@ -79,7 +79,7 @@ const Profile = ({ updateProfile, mes, err, setErr, setMes, role }) => {
   }
 
   return (
-    <div className="flex flex-col items-center justify-center w-full h-full gap-6 max-h-[100vh] overflow-y-auto">
+    <div className="flex flex-col items-center justify-center w-full h-full gap-6 max-h-[100vh] scrollbar-hide overflow-y-auto">
       <p className="text-2xl font-bold">Profile</p>
       <div className="flex flex-col items-center justify-center gap-3">
         <div className="sm:w-72 w-60 ">

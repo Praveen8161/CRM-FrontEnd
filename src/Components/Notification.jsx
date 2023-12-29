@@ -131,7 +131,7 @@ const Notification = ({ role }) => {
   }
 
   return (
-    <div className="flex flex-col items-center justify-start w-full h-full gap-3 p-5 sm:gap-6 max-h-[100vh] overflow-y-auto">
+    <div className="flex flex-col items-center justify-start w-full h-full gap-3 p-5 sm:gap-6 max-h-[100vh] overflow-y-auto scrollbar-hide">
       <div className={`w-full ${role === "user" ? "hidden" : ""}`}>
         {showAdd ? (
           <div className="w-full">

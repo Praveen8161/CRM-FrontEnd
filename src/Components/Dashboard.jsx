@@ -50,7 +50,7 @@ const Dashboard = ({ role }) => {
     );
   }
   return (
-    <div className="w-full h-full max-h-[100vh] overflow-y-auto">
+    <div className="w-full h-full max-h-[100vh] overflow-y-auto scrollbar-hide">
       <div className="lg:min-h-[50vh] md:min-h-[30vh] min-h-[20vh] flex flex-col justify-center items-center w-full bg-black text-black object-cover relative">
         <img
           src="/images/worldMap.svg"
