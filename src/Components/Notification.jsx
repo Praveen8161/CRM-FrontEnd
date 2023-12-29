@@ -13,6 +13,7 @@ const Notification = ({ role }) => {
 
   // Delete the notification from user database by user
   function handleDelete(id) {
+    alert("it will take few seconds Deleting notification ...");
     console.log(id);
     const updated = notify.filter((val) => {
       if (val.data._id === id) {
