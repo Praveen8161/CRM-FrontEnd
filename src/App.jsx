@@ -37,6 +37,7 @@ function App() {
     <>
       <Routes>
         <Route exact path="/" element={<UserLogin />} />
+        <Route exact path="/user" element={<UserLogin />} />
         <Route exact path="/signup" element={<UserSignup />} />
         <Route exact path="/forgot" element={<UserForgot />} />
         <Route exact path="/user/dashboard" element={<UserDashboard />} />

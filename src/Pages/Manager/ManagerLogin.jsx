@@ -6,6 +6,7 @@ import { useState } from "react";
 const ManagerLogin = () => {
   const URLLogin = `${API}/manager/login`;
   const URLResend = `${API}/manager/resendemail`;
+  const role = "manager";
 
   const name = "manager";
   const [mes, setMes] = useState("");
@@ -87,6 +88,7 @@ const ManagerLogin = () => {
         setResend={setResend}
         resend={resend}
         err={err}
+        role={role}
       />
     </div>
   );

@@ -13,12 +13,15 @@ const Login = ({
   setResend,
   handleResend,
   err,
+  role,
 }) => {
   const [userData, setUserData] = useState({
     email: "",
     password: "",
   });
   const navigate = useNavigate();
+
+  const RoleWise = ["user", "manager", "admin"];
 
   function reset() {
     setMes("");
@@ -137,6 +140,21 @@ const Login = ({
           Sign up
         </button>
       </p>
+      <div className="flex flex-row justify-around w-full flex-nowrap">
+        {RoleWise.filter((data) => {
+          return role !== data;
+        }).map((val, idx) => (
+          <p
+            onClick={() => {
+              navigate(`/${val}`);
+            }}
+            key={idx}
+            className="text-sm font-semibold capitalize cursor-pointer text-sky-600 hover:scale-110"
+          >
+            {val} <span>Login</span>
+          </p>
+        ))}
+      </div>
     </div>
   );
 };

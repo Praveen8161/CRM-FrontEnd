@@ -11,6 +11,7 @@ const AdminLogin = () => {
   const [mes, setMes] = useState("");
   const [err, setErr] = useState("");
   const [resend, setResend] = useState("");
+  const role = "admin";
 
   const navigate = useNavigate();
 
@@ -88,6 +89,7 @@ const AdminLogin = () => {
         setResend={setResend}
         resend={resend}
         err={err}
+        role={role}
       />
     </div>
   );

@@ -10,6 +10,7 @@ const UserLogin = () => {
   const [mes, setMes] = useState("");
   const [err, setErr] = useState("");
   const [resend, setResend] = useState("");
+  const role = "user";
 
   const navigate = useNavigate();
 
@@ -86,6 +87,7 @@ const UserLogin = () => {
         setResend={setResend}
         resend={resend}
         err={err}
+        role={role}
       />
     </div>
   );
