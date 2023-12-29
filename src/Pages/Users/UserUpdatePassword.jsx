@@ -47,7 +47,7 @@ const UserUpdatePassword = () => {
   }
 
   return (
-    <div className="flex items-center justify-center h-screen bg-slate-600">
+    <div className="flex items-center justify-center h-screen custom_bg">
       <UpdatePassword
         mes={mes}
         err={err}

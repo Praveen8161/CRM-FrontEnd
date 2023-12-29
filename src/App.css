@@ -1,0 +1,10 @@
+.custom_bg {
+  background-image: linear-gradient(
+    to left bottom,
+    #0a6081,
+    #006a9c,
+    #0073b7,
+    #007bd2,
+    #1281eb
+  );
+}

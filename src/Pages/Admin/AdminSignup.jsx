@@ -43,7 +43,7 @@ const AdminSignup = () => {
   }
 
   return (
-    <div className="flex items-center justify-center h-screen bg-slate-600">
+    <div className="flex items-center justify-center h-screen custom_bg">
       <Signup
         name={name}
         handleNavigate={handleNavigate}

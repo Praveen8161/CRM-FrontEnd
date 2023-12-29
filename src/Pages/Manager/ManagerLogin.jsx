@@ -75,7 +75,7 @@ const ManagerLogin = () => {
   }
 
   return (
-    <div className="flex items-center justify-center h-screen bg-slate-600">
+    <div className="flex items-center justify-center h-screen custom_bg">
       <Login
         name={name}
         handleNavigate={handleNavigate}
