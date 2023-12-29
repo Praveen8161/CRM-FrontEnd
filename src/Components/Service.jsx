@@ -74,6 +74,7 @@ const Service = ({ role, handleSerDel }) => {
 
   // Add Services to user
   function handleNewUserSer(id) {
+    prompt("Adding Service ...");
     let URL = `${API}/user/service/changeservice`;
     fetch(URL, {
       method: "PATCH",
@@ -101,6 +102,7 @@ const Service = ({ role, handleSerDel }) => {
 
   // Remove Services from user
   function handleDelUserSer(id) {
+    prompt("Removing Service ...");
     if (currSer.length < 1) {
       alert("No service available");
       return;
@@ -138,6 +140,7 @@ const Service = ({ role, handleSerDel }) => {
 
   // Service delete only by Admin
   async function handleDelete(id) {
+    prompt("Deleting Service ...");
     const result = await handleSerDel(id);
 
     if (result) {
