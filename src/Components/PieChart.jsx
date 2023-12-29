@@ -1,10 +1,15 @@
 /* eslint-disable react/prop-types */
-import { ArcElement, CategoryScale, Chart } from "chart.js";
+import Chart from "chart.js/auto";
+import { useEffect, useState } from "react";
 import { Pie } from "react-chartjs-2";
 
-Chart.register(ArcElement, CategoryScale);
-
-function PolarChart({ role, allData }) {
+function PieChart({ role, allData }) {
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+  useEffect(() => {
+    const handleResize = () => setWindowWidth(window.innerWidth);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
   const data = {
     labels: [
       "Total Tickets",
@@ -14,7 +19,7 @@ function PolarChart({ role, allData }) {
     ],
     datasets: [
       {
-        label: "My First Dataset",
+        label: "Application Data",
         data: [
           allData.totalTickets,
           allData.resolvedTicket,
@@ -38,7 +43,8 @@ function PolarChart({ role, allData }) {
     maintainAspectRatio: false,
     plugins: {
       legend: {
-        position: "right",
+        display: true,
+        position: windowWidth > 500 ? "right" : "top",
         labels: {
           color: "black",
         },
@@ -49,4 +55,4 @@ function PolarChart({ role, allData }) {
   return <Pie data={data} options={options} />;
 }
 
-export default PolarChart;
+export default PieChart;

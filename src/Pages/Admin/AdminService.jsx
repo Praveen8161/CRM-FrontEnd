@@ -35,7 +35,7 @@ const AdminService = () => {
       <div className="md:min-h-screen">
         <NavBar role={role} />
       </div>
-      <div className="flex flex-col w-full min-h-screen gap-8 py-5 ite bg-sky-300">
+      <div className="flex flex-col w-full min-h-screen gap-8 pb-5 bg-sky-300">
         <>
           <Service role={role} handleSerDel={handleSerDel} />
         </>

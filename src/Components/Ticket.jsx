@@ -18,6 +18,7 @@ const Ticket = ({ role }) => {
 
   const [mes, setMes] = useState("");
   const [err, setErr] = useState("");
+  const [isLoading, setIsLoading] = useState(true);
 
   const URLCreate = `${API}/${role}/ticket/create`;
   const URLDel = `${API}/${role}/ticket/delete`;
@@ -84,7 +85,7 @@ const Ticket = ({ role }) => {
 
   const URLGet = `${API}/${role}/ticket/view`;
 
-  // Get all the tickets at Mounting
+  // Get all the Ticket at Mounting
   useEffect(() => {
     fetch(URLGet, {
       method: "POST",
@@ -98,14 +99,24 @@ const Ticket = ({ role }) => {
         if (val.acknowledged) {
           setTicketData([...val.tickets]);
         }
+        setIsLoading(false);
       })
       .catch((err) => {
         console.log(err);
+        setIsLoading(false);
       });
   }, []);
 
+  if (isLoading) {
+    return (
+      <div className="flex items-center justify-center w-full h-full">
+        Loading...
+      </div>
+    );
+  }
+
   return (
-    <div className="flex flex-col flex-wrap items-center justify-start w-full h-full gap-3 p-5 sm:gap-6">
+    <div className="flex flex-col max-h-[100vh] overflow-y-auto items-center justify-start w-full h-full gap-3 p-5 sm:gap-6">
       <div className={`w-full ${role != "user" ? "hidden" : ""}`}>
         {showAdd ? (
           <div className="w-full">
@@ -137,7 +148,7 @@ const Ticket = ({ role }) => {
           )}
         </div>
       </div>
-      <hr className="w-full h-px bg-gray-900 shadow-md" />
+
       <p className="w-full text-xl font-semibold text-start">Tickets</p>
       <div className="grid grid-cols-[repeat(auto-fit,minmax(270px,1fr))] items-start justify-start w-full gap-8 py-4 sm:flex-row">
         {ticketData.length < 1 ? (
@@ -146,7 +157,7 @@ const Ticket = ({ role }) => {
           ticketData.map((val) => (
             <div
               key={val._id}
-              className="sm:min-w-[280px] min-w-270px flex flex-col items-start justify-start px-3 py-2 rounded-md  bg-slate-100"
+              className="sm:min-w-[280px] min-w-270px max-w-[380px] flex flex-col items-start justify-between px-3 py-2 rounded-md  bg-slate-100 h-full"
             >
               <p>
                 <span className="font-semibold">Ticket Number: </span>

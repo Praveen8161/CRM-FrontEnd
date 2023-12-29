@@ -5,6 +5,7 @@ import { API } from "../helpers/API";
 /* eslint-disable react/prop-types */
 const Activity = ({ role }) => {
   const [acti, setActi] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   const URL = `${API}/${role}/check`;
   useEffect(() => {
@@ -20,13 +21,24 @@ const Activity = ({ role }) => {
         if (val.acknowledged) {
           setActi([...val.user.activity]);
         }
+        setIsLoading(false);
       })
       .catch((err) => {
         console.log(err);
+        setIsLoading(false);
       });
   }, []);
+
+  if (isLoading) {
+    return (
+      <div className="flex items-center justify-center w-full h-full">
+        Loading...
+      </div>
+    );
+  }
+
   return (
-    <div className="flex flex-col flex-wrap items-center justify-start w-full h-full gap-3 py-5 sm:gap-6">
+    <div className="flex flex-col items-center justify-start w-full h-full gap-3 py-5 sm:gap-6 max-h-[100vh] overflow-y-auto">
       {acti.length < 1 ? (
         <div className="px-2 py-1 rounded-md bg-slate-100">
           No Activity found

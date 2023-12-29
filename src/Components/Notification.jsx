@@ -9,6 +9,7 @@ import CreateNotify from "./CreateNotify";
 const Notification = ({ role }) => {
   const [showAdd, setShowAdd] = useState(false);
   const [notify, setNotify] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   // Delete the notification from user database by user
   function handleDelete(id) {
@@ -90,9 +91,11 @@ const Notification = ({ role }) => {
           if (val.acknowledged) {
             setNotify([...val.notifications]);
           }
+          setIsLoading(false);
         })
         .catch((err) => {
           console.log(err);
+          setIsLoading(false);
         });
     } else if (role === "user") {
       const URLGet = `${API}/${role}/notify/usernotify`;
@@ -110,15 +113,25 @@ const Notification = ({ role }) => {
           if (val.acknowledged) {
             setNotify([...val.notifications]);
           }
+          setIsLoading(false);
         })
         .catch((err) => {
           console.log(err);
+          setIsLoading(false);
         });
     }
   }, []);
 
+  if (isLoading) {
+    return (
+      <div className="flex items-center justify-center w-full h-full">
+        Loading...
+      </div>
+    );
+  }
+
   return (
-    <div className="flex flex-col flex-wrap items-center justify-start w-full h-full gap-3 p-5 sm:gap-6">
+    <div className="flex flex-col items-center justify-start w-full h-full gap-3 p-5 sm:gap-6 max-h-[100vh] overflow-y-auto">
       <div className={`w-full ${role === "user" ? "hidden" : ""}`}>
         {showAdd ? (
           <div className="w-full">

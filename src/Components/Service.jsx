@@ -7,8 +7,9 @@ import CreateService from "./CreateService";
 const Service = ({ role, handleSerDel }) => {
   const [allSer, setAllSer] = useState([]);
   const [currSer, setCurrSer] = useState([]);
-  const [userSer, setUserSer] = useState([]);
+
   const [showAdd, setShowAdd] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   const URL = `${API}/${role}/service/getservices`;
   useEffect(() => {
@@ -22,17 +23,18 @@ const Service = ({ role, handleSerDel }) => {
       .then((val) => val.json())
       .then((val) => {
         if (val.acknowledged) {
-          if (val.userService && val.userService.length > 0) {
-            setUserSer(val.userService);
-            val.userService.forEach((val) => {
-              setCurrSer((prev) => [...prev, val._id]);
+          if (val.userSer && val.userSer.length > 0) {
+            val.userSer.forEach((data) => {
+              setCurrSer((prev) => [...prev, data._id]);
             });
           }
           setAllSer(val.allServices);
         }
+        setIsLoading(false);
       })
       .catch((err) => {
         console.log(err);
+        setIsLoading(false);
       });
   }, []);
 
@@ -70,6 +72,71 @@ const Service = ({ role, handleSerDel }) => {
       });
   }
 
+  // Add Services to user
+  function handleNewUserSer(id) {
+    let URL = `${API}/user/service/changeservice`;
+    fetch(URL, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        sessionToken: localStorage.getItem("CRMSes"),
+        services: [...currSer, id],
+      }),
+    })
+      .then((val) => val.json())
+      .then((val) => {
+        if (val.acknowledged) {
+          alert(val.message);
+          setCurrSer(val.data);
+        } else {
+          alert(val.error);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+
+  // Remove Services from user
+  function handleDelUserSer(id) {
+    if (currSer.length < 1) {
+      alert("No service available");
+      return;
+    }
+
+    const updatedSer = currSer.filter((data) => {
+      return data !== id;
+    });
+
+    setCurrSer(() => updatedSer);
+    let URL = `${API}/user/service/changeservice`;
+    fetch(URL, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        sessionToken: localStorage.getItem("CRMSes"),
+        services: updatedSer.length > 0 ? updatedSer : [],
+      }),
+    })
+      .then((val) => val.json())
+      .then((val) => {
+        if (val.acknowledged) {
+          alert(val.message);
+        } else {
+          alert(val.error);
+        }
+        setIsLoading(false);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+
+  // Service delete only by Admin
   async function handleDelete(id) {
     const result = await handleSerDel(id);
 
@@ -81,8 +148,16 @@ const Service = ({ role, handleSerDel }) => {
     }
   }
 
+  if (isLoading) {
+    return (
+      <div className="flex items-center justify-center w-full h-full">
+        Loading...
+      </div>
+    );
+  }
+
   return (
-    <div className="flex flex-col flex-wrap items-center justify-start w-full h-full gap-3 py-5 sm:gap-6">
+    <div className="flex flex-col max-h-[100vh] overflow-y-auto items-center justify-start w-full h-full gap-3 py-5 sm:gap-6">
       {/* Create service only by Admin */}
       <div className={`w-full ${role != "admin" ? "hidden" : ""}`}>
         {showAdd ? (
@@ -111,23 +186,27 @@ const Service = ({ role, handleSerDel }) => {
         </div>
       </div>
 
-      {/* User Services only for Users */}
+      <hr className="h-px" />
+      {/* All Services */}
       <div
-        className={`w-full  sm:grid-cols-[repeat(auto-fit),minmax(300px,1fr)]  flex-col justify-center items-center ${
-          role !== "user" ? "hidden" : "sm:grid flex"
-        }`}
+        className={`w-full sm:grid sm:grid-cols-[repeat(auto-fit,minmax(300px,1fr))] text-slate-100 flex flex-col px-5 gap-5 place-items-center `}
       >
-        {userSer.length < 1 ? (
+        {allSer.length < 1 ? (
           <div className="font-semibold text-center">No Services Added</div>
         ) : (
-          userSer.map((val) => (
-            <div key={val._id}>
+          allSer.map((val) => (
+            <div
+              key={val._id}
+              className={`flex flex-col items-start justify-start w-full gap-5 px-3 py-4 rounded-md max-w-[400px]
+                ${currSer.includes(val._id) ? "bg-green-500" : "bg-blue-800"}
+                `}
+            >
               <p>
-                <span>Name: </span>
+                <span className="font-semibold">Name: </span>
                 <span>{val.serviceName}</span>
               </p>
               <p>
-                <span>Created on: </span>
+                <span className="font-semibold">Created on: </span>
                 <span>
                   {
                     new Date(val.createdAt)
@@ -137,68 +216,57 @@ const Service = ({ role, handleSerDel }) => {
                   }
                 </span>
               </p>
+
+              {role === "user" ? (
+                currSer.includes(val._id) ? (
+                  <p>
+                    <span
+                      onClick={() => handleDelUserSer(val._id)}
+                      className="px-3 py-2 font-semibold bg-red-600 rounded-md relative active:top-[2px] cursor-pointer"
+                    >
+                      Stop Service
+                    </span>
+                  </p>
+                ) : (
+                  <p>
+                    <span
+                      onClick={() => handleNewUserSer(val._id)}
+                      className="px-3 py-2 font-semibold bg-green-600 rounded-md relative active:top-[2px] cursor-pointer"
+                    >
+                      Use Service
+                    </span>
+                  </p>
+                )
+              ) : (
+                ""
+              )}
+
+              {role !== "user" ? (
+                <>
+                  <p>
+                    <span>Current Users: </span>
+                    <span>{val.currentUser.length || 0}</span>
+                  </p>
+                  <p>
+                    <span>Old Users: </span>
+                    <span>{val.oldUser.length || 0}</span>
+                  </p>
+                </>
+              ) : (
+                ""
+              )}
+              {role === "admin" ? (
+                <button
+                  onClick={() => handleDelete(val._id)}
+                  className="px-3 py-1 text-white bg-red-600 rounded hover:bg-red-700 relative top-[-2px]"
+                >
+                  Delete
+                </button>
+              ) : (
+                ""
+              )}
             </div>
           ))
-        )}
-      </div>
-
-      <hr className="h-px" />
-      <div
-        className={`w-full sm:grid sm:grid-cols-[repeat(auto-fit,minmax(300px,1fr))] text-slate-100 flex flex-col px-5 gap-5 place-items-center `}
-      >
-        {allSer.length < 1 ? (
-          <div className="font-semibold text-center">No Services Added</div>
-        ) : (
-          allSer
-            .filter((val) => {
-              return !currSer.includes(val._id);
-            })
-            .map((val) => (
-              <div
-                key={val._id}
-                className="flex flex-col items-start justify-start w-full gap-5 px-3 py-4 bg-blue-800 rounded-md max-w-[400px]"
-              >
-                <p>
-                  <span className="font-semibold">Name: </span>
-                  <span>{val.serviceName}</span>
-                </p>
-                <p>
-                  <span className="font-semibold">Created on: </span>
-                  <span>
-                    {
-                      new Date(val.createdAt)
-                        .toISOString()
-                        .replace("T", " ")
-                        .split(".")[0]
-                    }
-                  </span>
-                </p>
-                {role !== "user" ? (
-                  <>
-                    <p>
-                      <span>Current Users: </span>
-                      <span>{val.currentUser.length || 0}</span>
-                    </p>
-                    <p>
-                      <span>Old Users: </span>
-                      <span>{val.oldUser.length || 0}</span>
-                    </p>
-                  </>
-                ) : (
-                  ""
-                )}
-                {role === "admin" ? (
-                  <button
-                    onClick={() => handleDelete(val._id)}
-                    className="px-3 py-1 text-white bg-red-600 rounded hover:bg-red-700 relative top-[-2px]"
-                  >
-                    Delete
-                  </button>
-                ) : (
-                  ""
-                )}
-              </div>
-            ))
         )}
       </div>
     </div>

@@ -32,7 +32,7 @@ const CreateNotify = ({ setShowAdd, handleNotify }) => {
 
   return (
     <div className="flex flex-col w-full gap-5 px-3 mx-auto xl:w-2/6 lg:w-3/6 md:w-3/6 sm:w-4/6 xs:w-5/6 xs:max-w-[400px] sm:max-w-none">
-      <h1 className="font-bold text-center font-xs">Create a Ticket</h1>
+      <h1 className="font-bold text-center font-xs">Create a Notification</h1>
 
       <input
         type="text"

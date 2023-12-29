@@ -27,7 +27,6 @@ const UserLogin = () => {
     })
       .then((val) => val.json())
       .then((val) => {
-        console.log(val);
         if (val.acknowledged) {
           setErr("");
           setMes(val.message);

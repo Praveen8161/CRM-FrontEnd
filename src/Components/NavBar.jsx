@@ -50,12 +50,12 @@ const NavBar = ({ role }) => {
 
   return (
     <div className="h-full max-h-[100vh] bg-blue-500">
-      <div className="flex justify-end px-1 py-1 sm:px-3 md:hidden">
+      <div className="flex justify-end px-1 py-1 font-semibold sm:px-3 md:hidden">
         <div onClick={() => setShow((prev) => !prev)}>
           <RiMenu3Fill size={30} />
         </div>
         <ul
-          className={`absolute flex flex-col gap-8 bg-blue-500  w-56 pl-4 pt-4 h-screen ${
+          className={`absolute flex flex-col gap-8 bg-blue-500 z-10 w-56 pl-4 pt-4 h-screen ${
             show
               ? "top-[38px] left-0 delay-150 transition-all"
               : "left-[-900px] delay-150 transition-all"
@@ -127,6 +127,7 @@ const NavBar = ({ role }) => {
         </ul>
       </div>
 
+      {/* For Medium size and above devices */}
       <div
         className={`md:flex-col h-full py-5 pl-5 md:flex hidden md:justify-between bg-blue-500 overflow-x-hidden text-lg font-medium ${
           show
@@ -285,107 +286,3 @@ const NavBar = ({ role }) => {
 };
 
 export default NavBar;
-{
-  /* <div className="w-72">
-          <ul className="flex flex-col w-full gap-8">
-            <li className="relative flex flex-row gap-2 cursor-pointer active:top-[2px] items-center">
-              <span>
-                <MdOutlineDashboardCustomize size={25} />
-              </span>
-              <span
-                className={` ${
-                  show
-                    ? "opacity-100 translate-x-0 delay-100 transition-all"
-                    : "opacity-0 translate-x-16"
-                }`}
-              >
-                Dashboard
-              </span>
-            </li>
-            <li className="relative flex flex-row gap-2 cursor-pointer active:top-[2px] items-center">
-              <span>
-                <FaRegUserCircle size={25} />
-              </span>
-              <span
-                className={`${
-                  show
-                    ? "opacity-100 translate-x-0 delay-[200ms] transition-all"
-                    : "opacity-0 translate-x-16"
-                }`}
-              >
-                Profile
-              </span>
-            </li>
-            <li className="relative flex flex-row gap-2 cursor-pointer active:top-[2px] items-center">
-              <span>
-                <IoTicketOutline size={25} />
-              </span>
-              <span
-                className={`${
-                  show
-                    ? "opacity-100 translate-x-0 delay-[300ms] transition-all"
-                    : "opacity-0 translate-x-16"
-                }`}
-              >
-                Tickets
-              </span>
-            </li>
-            <li className="relative flex flex-row gap-2 cursor-pointer active:top-[2px] items-center">
-              <span>
-                <GrServices size={25} />
-              </span>
-              <span
-                className={`${
-                  show
-                    ? "opacity-100 translate-x-0 delay-[400ms] transition-all"
-                    : "opacity-0 translate-x-16"
-                }`}
-              >
-                Services
-              </span>
-            </li>
-            <li className="relative flex flex-row gap-2 cursor-pointer active:top-[2px] items-center">
-              <span>
-                <IoMdNotificationsOutline size={25} />
-              </span>
-              <span
-                className={`${
-                  show
-                    ? "opacity-100 translate-x-0 delay-[500ms] transition-all"
-                    : "opacity-0 translate-x-16"
-                }`}
-              >
-                Notification
-              </span>
-            </li>
-            <li className="relative flex flex-row gap-2 cursor-pointer active:top-[2px] items-center">
-              <span>
-                <FiActivity size={25} />
-              </span>
-              <span
-                className={`${
-                  show
-                    ? "opacity-100 translate-x-0 delay-[600ms] transition-all"
-                    : "opacity-0 translate-x-16"
-                }`}
-              >
-                Activity
-              </span>
-            </li>
-            <li className="flex flex-row w-full gap-2 min-h-max cursor-pointer active:top-[2px] relative items-center">
-              <span>
-                <RiLogoutCircleLine size={25} />
-              </span>
-              <span
-                className={`${
-                  show
-                    ? "opacity-100 translate-x-0 delay-[700ms] transition-all"
-                    : "opacity-0 translate-x-16"
-                }`}
-              >
-                Logout
-              </span>
-            </li>
-          </ul>
-        </div> */
-}

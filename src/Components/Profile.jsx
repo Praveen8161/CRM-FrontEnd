@@ -11,6 +11,8 @@ const Profile = ({ updateProfile, mes, err, setErr, setMes, role }) => {
     phoneNumber: "",
   });
 
+  const [isLoading, setIsLoading] = useState(true);
+
   function reset() {
     setMes("");
     setErr("");
@@ -60,14 +62,24 @@ const Profile = ({ updateProfile, mes, err, setErr, setMes, role }) => {
             phoneNumber: val.user.phoneNumber,
           });
         }
+        setIsLoading(false);
       })
       .catch((err) => {
         console.log(err);
+        setIsLoading(false);
       });
   }, []);
 
+  if (isLoading) {
+    return (
+      <div className="flex items-center justify-center w-full h-full">
+        Loading...
+      </div>
+    );
+  }
+
   return (
-    <div className="flex flex-col items-center justify-center w-full h-full gap-6">
+    <div className="flex flex-col items-center justify-center w-full h-full gap-6 max-h-[100vh] overflow-y-auto">
       <p className="text-2xl font-bold">Profile</p>
       <div className="flex flex-col items-center justify-center gap-3">
         <div className="sm:w-72 w-60 ">

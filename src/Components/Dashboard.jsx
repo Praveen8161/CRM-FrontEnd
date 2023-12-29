@@ -14,6 +14,8 @@ const Dashboard = ({ role }) => {
     totalUser: 0,
   });
 
+  const [isLoading, setIsLoading] = useState(true);
+
   useEffect(() => {
     fetch(URL, {
       method: "POST",
@@ -31,13 +33,24 @@ const Dashboard = ({ role }) => {
             ...val.data,
           }));
         }
+
+        setIsLoading(false);
       })
       .catch((err) => {
         console.log(err);
+        setIsLoading(false);
       });
   }, []);
+
+  if (isLoading) {
+    return (
+      <div className="flex items-center justify-center w-full h-full">
+        Loading...
+      </div>
+    );
+  }
   return (
-    <div className="w-full h-full">
+    <div className="w-full h-full max-h-[100vh] overflow-y-auto">
       <div className="lg:min-h-[50vh] md:min-h-[30vh] min-h-[20vh] flex flex-col justify-center items-center w-full bg-black text-black object-cover relative">
         <img
           src="/images/worldMap.svg"
@@ -59,7 +72,7 @@ const Dashboard = ({ role }) => {
       </div>
 
       <div className="flex flex-col items-center justify-center w-full gap-3 px-3 mt-6 text-xl font-semibold md:py-3 md:flex md:flex-row">
-        <div className="w-full md:w-3/5 max-h-[30vh]">
+        <div className="w-full md:w-3/5 min-h-[30vh]">
           <PieChart allData={allData} role={role} />
         </div>
       </div>
