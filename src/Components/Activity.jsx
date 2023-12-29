@@ -33,7 +33,8 @@ const Activity = ({ role }) => {
         </div>
       ) : (
         acti.map((val, idx) => (
-          <div key={idx} className="px-2 py-1 rounded-md bg-slate-100">
+          <div key={idx} className="px-5 py-2 rounded-md bg-slate-100">
+            <p className="font-semibold">Logged On</p>
             {
               new Date(Number(val))
                 .toISOString()

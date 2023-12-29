@@ -9,39 +9,42 @@ import CreateNotify from "./CreateNotify";
 const Notification = ({ role }) => {
   const [showAdd, setShowAdd] = useState(false);
   const [notify, setNotify] = useState([]);
-  const URLCreate = `${API}/${role}/notify/createnotify`;
-  const URLGet = `${API}/${role}/notify/allnotify`;
 
-  // Update the read status for the User
-  function handleRead(id) {
-    try {
-      if (role !== "user") return;
-      const updated = notify.map((val) => {
-        if (val._id === id && !val.notification.readStatus) {
-          val.notification.readStatus = true;
-        }
-        return val;
-      });
-      setNotify(updated);
-    } catch (err) {
-      console.log(err);
-    }
-  }
-
-  // Delete the notification from user database
+  // Delete the notification from user database by user
   function handleDelete(id) {
     console.log(id);
     const updated = notify.filter((val) => {
-      if (val._id === id) {
-        console.log(val._id === id);
+      if (val.data._id === id) {
         return false;
       }
       return true;
     });
     setNotify(updated);
+    const URLGet = `${API}/user/notify/usernotifydelete`;
+    fetch(URLGet, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        sessionToken: localStorage.getItem("CRMSes"),
+        notifyId: id,
+      }),
+    })
+      .then((val) => val.json())
+      .then((val) => {
+        if (val.acknowledged) {
+          alert("Notification Deleted");
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }
 
+  // Create new notification only for manager and admin
   function handleNotify(notData) {
+    const URLCreate = `${API}/${role}/notify/createnotify`;
     fetch(URLCreate, {
       method: "POST",
       headers: {
@@ -68,25 +71,50 @@ const Notification = ({ role }) => {
       });
   }
 
+  // get all the notification from user Database
+
   useEffect(() => {
-    fetch(URLGet, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        sessionToken: localStorage.getItem("CRMSes"),
-      }),
-    })
-      .then((val) => val.json())
-      .then((val) => {
-        if (val.acknowledged) {
-          setNotify([...val.notifications]);
-        }
+    if (role !== "user") {
+      const URLGet = `${API}/${role}/notify/allnotify`;
+      fetch(URLGet, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          sessionToken: localStorage.getItem("CRMSes"),
+        }),
       })
-      .catch((err) => {
-        console.log(err);
-      });
+        .then((val) => val.json())
+        .then((val) => {
+          if (val.acknowledged) {
+            setNotify([...val.notifications]);
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    } else if (role === "user") {
+      const URLGet = `${API}/${role}/notify/usernotify`;
+      fetch(URLGet, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          sessionToken: localStorage.getItem("CRMSes"),
+        }),
+      })
+        .then((val) => val.json())
+        .then((val) => {
+          if (val.acknowledged) {
+            setNotify([...val.notifications]);
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
   }, []);
 
   return (
@@ -125,16 +153,20 @@ const Notification = ({ role }) => {
           <div className="mx-5 space-y-2">
             {notify.reverse().map((val, idx) => (
               <div
-                onClick={() => handleRead(val._id)}
                 key={idx}
                 className="flex flex-col gap-2 p-5 text-white bg-teal-700 rounded-lg group"
                 tabIndex="1"
               >
                 <div className="flex items-center justify-between cursor-pointer">
-                  <span> {val.notificationName} </span>
+                  <span>
+                    {" "}
+                    {role !== "user"
+                      ? val.notificationName
+                      : val.data.notificationName}{" "}
+                  </span>
                   <div className="flex flex-row gap-12 flex-nowrap">
                     <div
-                      onClick={() => handleDelete(val._id)}
+                      onClick={() => handleDelete(val.data._id)}
                       className={`w-3 h-2 transition-all duration-500 group-focus:translate-y-[-5px] ${
                         role !== "user" ? "hidden" : ""
                       } `}
@@ -147,8 +179,18 @@ const Notification = ({ role }) => {
                   </div>
                 </div>
                 <div className="items-center invisible h-auto transition-all opacity-0 max-h-0 group-focus:visible group-focus:max-h-screen group-focus:opacity-100 group-focus:duration-1000">
-                  <p>{val.message}</p>
-                  <p>{new Date(val.createdAt).toISOString().split("T")[0]}</p>
+                  <p>{role !== "user" ? val.message : val.data.message}</p>
+                  <p>
+                    {role !== "user"
+                      ? new Date(val.createdAt)
+                          .toISOString()
+                          .replace("T", " ")
+                          .split(".")[0]
+                      : new Date(val.data.createdAt)
+                          .toISOString()
+                          .replace("T", " ")
+                          .split(".")[0]}
+                  </p>
                 </div>
               </div>
             ))}

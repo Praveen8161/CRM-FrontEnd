@@ -1,10 +1,11 @@
 import { useNavigate } from "react-router-dom";
 import ForgotPassword from "../../Components/ForgotPassword";
-import { API } from "../../helpers/API";
+import { API, CurrAPI } from "../../helpers/API";
 import { useState } from "react";
 
 const AdminForgot = () => {
   const URLForgot = `${API}/admin/forgot`;
+  const URLUpdate = `${CurrAPI}/admin/update`;
 
   const [mes, setMes] = useState("");
   const [err, setErr] = useState("");
@@ -27,7 +28,7 @@ const AdminForgot = () => {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ email: emailId }),
+      body: JSON.stringify({ email: emailId, link: URLUpdate }),
     })
       .then((val) => val.json())
       .then((val) => {

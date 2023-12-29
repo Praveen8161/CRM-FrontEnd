@@ -10,7 +10,7 @@ const ManagerDashboard = () => {
         <NavBar role={role} />
       </div>
       <div className="w-full min-h-screen bg-sky-300">
-        <Dashboard />
+        <Dashboard role={role} />
       </div>
     </div>
   );

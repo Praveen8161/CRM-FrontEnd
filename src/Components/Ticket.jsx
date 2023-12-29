@@ -22,6 +22,7 @@ const Ticket = ({ role }) => {
   const URLCreate = `${API}/${role}/ticket/create`;
   const URLDel = `${API}/${role}/ticket/delete`;
 
+  // Delete a new Ticket
   function handleDeleteTicket(ticketId) {
     fetch(URLDel, {
       method: "DELETE",
@@ -49,13 +50,17 @@ const Ticket = ({ role }) => {
       });
   }
 
+  // Create a new Ticket
   function handleTicket(ticData) {
     fetch(URLCreate, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(ticData),
+      body: JSON.stringify({
+        sessionToken: localStorage.getItem("CRMSes"),
+        ticData,
+      }),
     })
       .then((val) => val.json())
       .then((val) => {
@@ -78,6 +83,8 @@ const Ticket = ({ role }) => {
   }
 
   const URLGet = `${API}/${role}/ticket/view`;
+
+  // Get all the tickets at Mounting
   useEffect(() => {
     fetch(URLGet, {
       method: "POST",
@@ -156,32 +163,65 @@ const Ticket = ({ role }) => {
               <p>
                 <span className="font-semibold">Created At: </span>
                 <span>
-                  {new Date(val.createdAt).toISOString().split("T")[0]}
+                  {
+                    new Date(val.createdAt)
+                      .toISOString()
+                      .replace("T", " ")
+                      .split(".")[0]
+                  }
                 </span>
               </p>
+
+              {val.resolvedBy ? (
+                <>
+                  <p>
+                    <span className="font-semibold">Resolve At: </span>
+                    <span>
+                      {
+                        new Date(val.resolvedAt)
+                          .toISOString()
+                          .replace("T", " ")
+                          .split(".")[0]
+                      }
+                    </span>
+                  </p>
+                  <p>
+                    <span className="font-semibold">Comment: </span>
+                    <span>{val.resolveComment}</span>
+                  </p>
+                </>
+              ) : (
+                ""
+              )}
+
               <div className="flex flex-row justify-around w-full gap-2">
                 {role !== "user" ? (
-                  <button
-                    onClick={() => {
-                      setShowres(true);
-                      setResData({
-                        name: val.ticketName,
-                        number: val.ticketNumber,
-                        message: val.ticketMessage,
-                        createdAt: val.createdAt,
-                        _id: val._id,
-                      });
-                    }}
-                    className={`px-3 relative py-1 text-white  rounded hover:bg-green-500 active:top-[-2px] ${
-                      val.resolvedBy ? "bg-green-600" : "bg-red-600"
-                    }`}
-                  >
-                    {val.resolvedBy ? "Cleared" : "Resolve"}
-                  </button>
+                  val.resolvedBy ? (
+                    <button className="px-3 relative py-1 text-white bg-green-600 rounded hover:bg-green-700 active:top-[-2px]">
+                      Cleared
+                    </button>
+                  ) : (
+                    <button
+                      onClick={() => {
+                        setShowres(true);
+                        setResData({
+                          name: val.ticketName,
+                          number: val.ticketNumber,
+                          message: val.ticketMessage,
+                          createdAt: val.createdAt,
+                          _id: val._id,
+                        });
+                      }}
+                      className={`px-3 relative py-1 text-white bg-red-600 rounded hover:bg-green-500 active:top-[-2px] $`}
+                    >
+                      Resolve
+                    </button>
+                  )
                 ) : (
                   ""
                 )}
 
+                {/* Show Delete option only to Admin */}
                 {role === "admin" ? (
                   <button
                     onClick={() => {
@@ -200,7 +240,13 @@ const Ticket = ({ role }) => {
         )}
 
         {showRes ? (
-          <Resolve setShowres={setShowres} resData={resData} role={role} />
+          <Resolve
+            setShowres={setShowres}
+            resData={resData}
+            role={role}
+            ticketData={ticketData}
+            setTicketData={setTicketData}
+          />
         ) : (
           ""
         )}
@@ -209,9 +255,17 @@ const Ticket = ({ role }) => {
   );
 };
 
-const Resolve = function ({ resData, setShowres, role }) {
+// Resolving the Ticket
+const Resolve = function ({
+  resData,
+  setShowres,
+  role,
+  ticketData,
+  setTicketData,
+}) {
   const [comment, setComment] = useState("");
   const URL = `${API}/${role}/ticket/resolve`;
+
   function handlResolve() {
     if (!comment) {
       alert("Fields are required");
@@ -234,6 +288,15 @@ const Resolve = function ({ resData, setShowres, role }) {
         if (val.acknowledged) {
           alert(val.message);
           setShowres(false);
+
+          const updated = ticketData.map((data) => {
+            if (data._id === val.ticket._id) {
+              return val.ticket;
+            }
+            return data;
+          });
+
+          setTicketData(updated);
         } else {
           alert(val.error);
         }

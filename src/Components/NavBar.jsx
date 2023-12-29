@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react/prop-types */
 import { RiMenuUnfoldLine, RiMenuFoldLine } from "react-icons/ri";
 import { RiMenu3Fill } from "react-icons/ri";
@@ -9,11 +10,15 @@ import { GrServices } from "react-icons/gr";
 import { IoMdNotificationsOutline } from "react-icons/io";
 import { FiActivity } from "react-icons/fi";
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { API } from "../helpers/API";
 
 const NavBar = ({ role }) => {
   const navigate = useNavigate();
   const [show, setShow] = useState(false);
+  const [userName, setUserName] = useState("");
+
+  const URL = `${API}/${role}/check`;
 
   function handleLogout() {
     localStorage.removeItem("CRMSes");
@@ -23,6 +28,25 @@ const NavBar = ({ role }) => {
       navigate(`/${role}`, { replace: true });
     }
   }
+
+  useEffect(() => {
+    fetch(URL, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ sessionToken: localStorage.getItem("CRMSes") }),
+    })
+      .then((val) => val.json())
+      .then((val) => {
+        if (val.acknowledged) {
+          setUserName(val.user.first_name);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
 
   return (
     <div className="h-full max-h-[100vh] bg-blue-500">
@@ -34,7 +58,7 @@ const NavBar = ({ role }) => {
           className={`absolute flex flex-col gap-8 bg-blue-500  w-56 pl-4 pt-4 h-screen ${
             show
               ? "top-[38px] left-0 delay-150 transition-all"
-              : "left-[-900px]"
+              : "left-[-900px] delay-150 transition-all"
           } `}
         >
           <li
@@ -105,18 +129,24 @@ const NavBar = ({ role }) => {
 
       <div
         className={`md:flex-col h-full py-5 pl-5 md:flex hidden md:justify-between bg-blue-500 overflow-x-hidden text-lg font-medium ${
-          show ? "w-60 pr-2" : "w-16"
+          show
+            ? "w-60 pr-2 delay-150 transition-all"
+            : "w-16 delay-150 transition-all"
         } `}
       >
         <div>
           <div
             onClick={() => setShow((prev) => !prev)}
-            className={`flex mb-5 cursor-pointer ${show ? " justify-end" : ""}`}
+            className={`flex mb-5 cursor-pointer ${
+              show
+                ? " justify-end delay-200 transition-all"
+                : "delay-200 transition-all"
+            }`}
           >
             {show ? (
-              <div className="flex flex-row justify-between w-full">
-                <p>
-                  Hi <span>{"first_name"}</span>
+              <div className="flex flex-row justify-between w-full peer">
+                <p className={`flex flex-row gap-2 flex-nowrap `}>
+                  Hi <span>{userName || "there"}</span>
                 </p>
                 <RiMenuFoldLine size={30} />
               </div>

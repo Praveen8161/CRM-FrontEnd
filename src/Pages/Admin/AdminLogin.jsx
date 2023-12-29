@@ -19,6 +19,7 @@ const AdminLogin = () => {
   }
 
   function handleLogin(userData) {
+    console.log(userData);
     fetch(URLLogin, {
       method: "POST",
       headers: {
@@ -28,7 +29,6 @@ const AdminLogin = () => {
     })
       .then((val) => val.json())
       .then((val) => {
-        console.log(val);
         if (val.acknowledged) {
           setErr("");
           setMes(val.message);

@@ -6,7 +6,7 @@ import { useState } from "react";
 const AdminUpdatePassword = () => {
   const { id, token } = useParams();
 
-  const URL = `${API}/user/update/${id}/${token}`;
+  const URL = `${API}/admin/update/${id}/${token}`;
 
   const [err, setErr] = useState("");
   const [mes, setMes] = useState("");

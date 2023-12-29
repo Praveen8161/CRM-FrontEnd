@@ -5,7 +5,7 @@ const CreateService = ({ handleService, setShowAdd }) => {
   const [serviceName, setServiceName] = useState("");
   return (
     <div className="flex flex-col w-full gap-5 px-3 mx-auto xl:w-2/6 lg:w-3/6 md:w-3/6 sm:w-4/6 xs:w-5/6 xs:max-w-[400px] sm:max-w-none">
-      <h1 className="font-bold text-center font-xs">Create a Ticket</h1>
+      <h1 className="font-bold text-center font-xs">Create a Service</h1>
 
       <input
         type="text"
@@ -21,14 +21,14 @@ const CreateService = ({ handleService, setShowAdd }) => {
           onClick={() => {
             setShowAdd(false);
           }}
-          className="px-3 py-1 text-white bg-red-500 rounded hover:bg-red-600"
+          className="px-3 py-1 text-white bg-red-500 rounded hover:bg-red-600 relative top-[-2px]"
         >
           Cancel
         </button>
 
         <button
           onClick={() => handleService(serviceName)}
-          className="px-3 py-1 text-white bg-green-400 rounded hover:bg-green-700"
+          className="px-3 py-1 text-white bg-green-600 rounded hover:bg-green-700 relative top-[-2px]"
         >
           Add Service
         </button>
