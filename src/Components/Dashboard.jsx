@@ -78,7 +78,7 @@ const Dashboard = ({ role }) => {
       </div>
 
       <div className="flex flex-col items-center justify-center w-full gap-3 px-3 mt-6 text-xl font-semibold md:py-3 md:flex md:flex-row">
-        <div className="w-full md:w-3/5 min-h-[30vh]">
+        <div className="w-full md:w-3/5 min-h-[30vh] h-[60vh]">
           <PieChart allData={allData} role={role} />
         </div>
       </div>

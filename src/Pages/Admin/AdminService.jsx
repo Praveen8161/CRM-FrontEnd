@@ -35,11 +35,11 @@ const AdminService = () => {
   }
 
   return (
-    <div className="flex flex-col w-full md:flex-row">
-      <div className="md:min-h-screen">
+    <div className="flex flex-col w-full max-h-screen md:flex-row scrollbar-hide">
+      <div className="max-h-screen overflow-hidden">
         <NavBar role={role} />
       </div>
-      <div className="flex flex-col w-full min-h-screen gap-8 pb-5 bg-sky-300">
+      <div className="flex flex-col w-full min-h-screen gap-8 bg-sky-300 scrollbar-hide">
         <>
           <Service role={role} handleSerDel={handleSerDel} />
         </>
