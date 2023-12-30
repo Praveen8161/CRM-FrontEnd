@@ -4,25 +4,33 @@ import { useState } from "react";
 import { API, CurrAPI } from "../../helpers/API";
 
 const ManagerForgot = () => {
+  // API URL for forgot password
   const URLForgot = `${API}/manager/forgot`;
+  //Front end link to enter the new password
   const URLUpdate = `${CurrAPI}/manager/update`;
 
+  // Display message and errors
   const [mes, setMes] = useState("");
   const [err, setErr] = useState("");
 
+  // Role Declaration
   const name = "Manager";
+
   const navigate = useNavigate();
   function handleNavigate() {
     navigate("/manager");
   }
 
+  // Sending forgot password message
   function handleForgot(emailId) {
+    // Checking empty field
     if (!emailId) {
       setMes("");
       setErr("Fields are required");
       return;
     }
 
+    // API for forgot password
     fetch(URLForgot, {
       method: "POST",
       headers: {

@@ -6,12 +6,15 @@ import { useState } from "react";
 const AdminUpdatePassword = () => {
   const { id, token } = useParams();
 
+  // API URL Update password
   const URL = `${API}/admin/update/${id}/${token}`;
-
+  // Display message and errors
   const [err, setErr] = useState("");
   const [mes, setMes] = useState("");
 
+  // Update new password function
   function handleUpdate(userData) {
+    // check for empty field
     if (!userData.newPassword) {
       setErr("Fields are required");
       return;
@@ -22,6 +25,7 @@ const AdminUpdatePassword = () => {
       return;
     }
 
+    // API update password
     fetch(URL, {
       method: "PATCH",
       headers: {
@@ -45,6 +49,7 @@ const AdminUpdatePassword = () => {
         setErr("Error updating password");
       });
   }
+
   return (
     <div className="flex items-center justify-center h-screen custom_bg">
       <UpdatePassword

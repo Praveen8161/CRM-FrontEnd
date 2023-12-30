@@ -15,11 +15,15 @@ import { API } from "../helpers/API";
 
 const NavBar = ({ role }) => {
   const navigate = useNavigate();
+
   const [show, setShow] = useState(false);
+  // Show Current user First Name
   const [userName, setUserName] = useState("");
 
+  // API URL Get all the data
   const URL = `${API}/${role}/check`;
 
+  // Logout function
   function handleLogout() {
     localStorage.removeItem("CRMSes");
     if (role === "user") {
@@ -29,6 +33,7 @@ const NavBar = ({ role }) => {
     }
   }
 
+  // Get user first Name
   useEffect(() => {
     fetch(URL, {
       method: "POST",
@@ -50,10 +55,12 @@ const NavBar = ({ role }) => {
 
   return (
     <div className="h-full max-h-[100vh] bg-blue-500">
+      {/* For Mobile View */}
       <div className="flex justify-end px-1 py-1 font-semibold sm:px-3 md:hidden">
         <div onClick={() => setShow((prev) => !prev)}>
           <RiMenu3Fill size={30} />
         </div>
+
         <ul
           className={`absolute flex flex-col gap-8 bg-blue-500 z-10 w-56 pl-4 pt-4 h-screen ${
             show

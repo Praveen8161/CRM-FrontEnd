@@ -4,12 +4,17 @@ import Profile from "../../Components/Profile";
 import { API } from "../../helpers/API";
 
 const UserProfile = () => {
+  // Role declaring
   const role = "user";
+
+  // URL for profile details update
   const URL = `${API}/${role}/profile/update`;
 
+  // display message and error
   const [mes, setMes] = useState("");
   const [err, setErr] = useState("");
 
+  // update profile API
   function updateProfile(userData) {
     fetch(URL, {
       method: "POST",

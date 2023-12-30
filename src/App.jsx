@@ -36,6 +36,7 @@ function App() {
   return (
     <>
       <Routes>
+        {/* User Routes */}
         <Route exact path="/" element={<UserLogin />} />
         <Route exact path="/user" element={<UserLogin />} />
         <Route exact path="/signup" element={<UserSignup />} />
@@ -52,6 +53,7 @@ function App() {
           element={<UserUpdatePassword />}
         />
 
+        {/* Manage Routes */}
         <Route exact path="/manager" element={<ManagerLogin />} />
         <Route exact path="/manager/signup" element={<ManagerSignup />} />
         <Route exact path="/manager/forgot" element={<ManagerForgot />} />
@@ -67,6 +69,7 @@ function App() {
           element={<ManagerUpdatePassword />}
         />
 
+        {/* Admin Routes */}
         <Route exact path="/admin" element={<AdminLogin />} />
         <Route exact path="/admin/signup" element={<AdminSignup />} />
         <Route exact path="/admin/forgot" element={<AdminForgot />} />
@@ -82,6 +85,7 @@ function App() {
           element={<AdminUpdatePassword />}
         />
 
+        {/* No page Route */}
         <Route path="/*" element={<NoPage />} />
       </Routes>
     </>

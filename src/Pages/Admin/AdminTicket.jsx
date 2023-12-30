@@ -2,6 +2,7 @@ import NavBar from "../../Components/NavBar";
 import Ticket from "../../Components/Ticket";
 
 const AdminTicket = () => {
+  // Role Declaration
   const role = "admin";
 
   return (

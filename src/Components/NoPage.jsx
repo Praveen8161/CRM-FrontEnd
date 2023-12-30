@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom";
 
 const NoPage = () => {
   const navigate = useNavigate();
+
   return (
     <div className="flex flex-col items-center justify-center w-screen h-screen gap-5 bg-sky-500">
       <p className="text-xl font-medium text-black">

@@ -4,9 +4,12 @@ import { API } from "../helpers/API";
 
 /* eslint-disable react/prop-types */
 const Activity = ({ role }) => {
+  // All activity data
   const [acti, setActi] = useState([]);
+  // Initial Loading state
   const [isLoading, setIsLoading] = useState(true);
 
+  // API URL Get Activity Data
   const URL = `${API}/${role}/check`;
   useEffect(() => {
     fetch(URL, {
@@ -29,6 +32,7 @@ const Activity = ({ role }) => {
       });
   }, []);
 
+  // Initial Loading Screen
   if (isLoading) {
     return (
       <div className="flex items-center justify-center w-full h-full">

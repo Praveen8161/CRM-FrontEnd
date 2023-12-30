@@ -2,6 +2,7 @@ import NavBar from "../../Components/NavBar";
 import Ticket from "../../Components/Ticket";
 
 const UserTicket = () => {
+  // Declaring role
   const role = "user";
 
   return (

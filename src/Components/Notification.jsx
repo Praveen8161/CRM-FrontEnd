@@ -7,14 +7,18 @@ import { API } from "../helpers/API";
 import CreateNotify from "./CreateNotify";
 
 const Notification = ({ role }) => {
+  // Show or Hide Create notification state
   const [showAdd, setShowAdd] = useState(false);
+  // All Notification Data
   const [notify, setNotify] = useState([]);
+  // Initial loading state
   const [isLoading, setIsLoading] = useState(true);
 
   // Delete the notification from user database by user
   function handleDelete(id) {
     alert("it will take few seconds Deleting notification ...");
-    console.log(id);
+
+    // Update user Notification field
     const updated = notify.filter((val) => {
       if (val.data._id === id) {
         return false;
@@ -22,6 +26,8 @@ const Notification = ({ role }) => {
       return true;
     });
     setNotify(updated);
+
+    // API URL Delte notification from user database
     const URLGet = `${API}/user/notify/usernotifydelete`;
     fetch(URLGet, {
       method: "DELETE",
@@ -44,8 +50,9 @@ const Notification = ({ role }) => {
       });
   }
 
-  // Create new notification only for manager and admin
+  // Create new notification only for Manager and Admin
   function handleNotify(notData) {
+    // API URL Create Notification
     const URLCreate = `${API}/${role}/notify/createnotify`;
     fetch(URLCreate, {
       method: "POST",
@@ -74,9 +81,9 @@ const Notification = ({ role }) => {
   }
 
   // get all the notification from user Database
-
   useEffect(() => {
     if (role !== "user") {
+      // API URL Get All notification
       const URLGet = `${API}/${role}/notify/allnotify`;
       fetch(URLGet, {
         method: "POST",
@@ -99,6 +106,7 @@ const Notification = ({ role }) => {
           setIsLoading(false);
         });
     } else if (role === "user") {
+      // API URL Get All User notification
       const URLGet = `${API}/${role}/notify/usernotify`;
       fetch(URLGet, {
         method: "POST",
@@ -133,6 +141,7 @@ const Notification = ({ role }) => {
 
   return (
     <div className="flex flex-col items-center justify-start w-full h-full gap-3 p-5 sm:gap-6 max-h-[100vh] overflow-y-auto scrollbar-hide">
+      {/* Create new notification only for Manager and Admin */}
       <div className={`w-full ${role === "user" ? "hidden" : ""}`}>
         {showAdd ? (
           <div className="w-full">
@@ -160,6 +169,8 @@ const Notification = ({ role }) => {
           )}
         </div>
       </div>
+
+      {/* Show All Notification */}
       <div className="w-full">
         {notify.length < 1 ? (
           <div className="font-semibold">No Notification found</div>

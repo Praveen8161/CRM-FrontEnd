@@ -4,13 +4,20 @@ import { API } from "../../helpers/API";
 import { useState } from "react";
 
 const UserLogin = () => {
+  // login API URL
   const URLLogin = `${API}/user/login`;
+
+  // Resending confirmation email URL API
   const URLResend = `${API}/user/resendemail`;
+
+  // Role declarartion
   const name = "user";
+  const role = "user";
+
+  // Display message and error
   const [mes, setMes] = useState("");
   const [err, setErr] = useState("");
   const [resend, setResend] = useState("");
-  const role = "user";
 
   const navigate = useNavigate();
 
@@ -18,6 +25,7 @@ const UserLogin = () => {
     navigate("/signup");
   }
 
+  // Login API
   function handleLogin(userData) {
     fetch(URLLogin, {
       method: "POST",
@@ -31,7 +39,11 @@ const UserLogin = () => {
         if (val.acknowledged) {
           setErr("");
           setMes(val.message);
+
+          // Setting Local storage
           localStorage.setItem("CRMSes", val.sessionToken);
+
+          // Navigate to dashboard
           navigate("/user/dashboard", { replace: true });
         } else {
           if (val.active) {
@@ -48,6 +60,7 @@ const UserLogin = () => {
       });
   }
 
+  // Resending confirmation Email API
   function handleResend(userData) {
     setMes("resending Verification email ...");
     fetch(URLResend, {

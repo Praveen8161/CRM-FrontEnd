@@ -2,7 +2,9 @@ import Activity from "../../Components/Activity";
 import NavBar from "../../Components/NavBar";
 
 const AdminActivity = () => {
+  // Role Declaration
   const role = "admin";
+
   return (
     <div className="flex flex-col w-full md:flex-row">
       <div className="md:min-h-screen">

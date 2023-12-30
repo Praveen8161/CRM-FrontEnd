@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { API } from "../helpers/API";
 
 const Profile = ({ updateProfile, mes, err, setErr, setMes, role }) => {
+  // All User data
   const [userData, setUserData] = useState({
     email: "",
     first_name: "",
@@ -11,13 +12,16 @@ const Profile = ({ updateProfile, mes, err, setErr, setMes, role }) => {
     phoneNumber: "",
   });
 
+  // Initial Loading screen
   const [isLoading, setIsLoading] = useState(true);
 
+  // reset function
   function reset() {
     setMes("");
     setErr("");
   }
 
+  // Check empty data
   function checkData(uD) {
     for (let i in uD) {
       if (!uD[i]) {
@@ -27,6 +31,7 @@ const Profile = ({ updateProfile, mes, err, setErr, setMes, role }) => {
     }
   }
 
+  // Update user input
   function handleChange(e) {
     reset();
     setUserData((prev) => ({
@@ -35,6 +40,7 @@ const Profile = ({ updateProfile, mes, err, setErr, setMes, role }) => {
     }));
   }
 
+  // Updating User profile Data
   function handleClick() {
     reset();
     let chk = checkData(userData);
@@ -43,6 +49,7 @@ const Profile = ({ updateProfile, mes, err, setErr, setMes, role }) => {
     updateProfile(userData);
   }
 
+  // API URL Get user profile data
   const URL = `${API}/${role}/check`;
   useEffect(() => {
     fetch(URL, {
@@ -70,6 +77,7 @@ const Profile = ({ updateProfile, mes, err, setErr, setMes, role }) => {
       });
   }, []);
 
+  // Initial loading screen
   if (isLoading) {
     return (
       <div className="flex items-center justify-center w-full h-full">
@@ -81,6 +89,7 @@ const Profile = ({ updateProfile, mes, err, setErr, setMes, role }) => {
   return (
     <div className="flex flex-col items-center justify-center w-full h-full gap-6 max-h-[100vh] scrollbar-hide overflow-y-auto">
       <p className="text-2xl font-bold">Profile</p>
+      {/* Email field */}
       <div className="flex flex-col items-center justify-center gap-3">
         <div className="sm:w-72 w-60 ">
           <p className="font-semibold">Email:</p>
@@ -93,6 +102,8 @@ const Profile = ({ updateProfile, mes, err, setErr, setMes, role }) => {
             className="bg-gray-300 border border-gray-300 text-black text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
           />
         </div>
+
+        {/* First Name field */}
         <div className="sm:w-72 w-60 ">
           <p className="font-semibold">First Name:</p>
           <input
@@ -104,6 +115,8 @@ const Profile = ({ updateProfile, mes, err, setErr, setMes, role }) => {
             className="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
           />
         </div>
+
+        {/* Last Name field */}
         <div className="sm:w-72 w-60 ">
           <p className="font-semibold">Last Name:</p>
           <input
@@ -115,6 +128,8 @@ const Profile = ({ updateProfile, mes, err, setErr, setMes, role }) => {
             className="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
           />
         </div>
+
+        {/* Phone Number field */}
         <div className="sm:w-72 w-60 ">
           <p className="font-semibold">Phone Number:</p>
           <input

@@ -5,7 +5,9 @@ import { API } from "../helpers/API";
 import PieChart from "./PieChart";
 
 const Dashboard = ({ role }) => {
+  // Get all data about current user
   const URL = `${API}/${role}/data/alldata`;
+  // All user Data
   const [allData, setAllData] = useState({
     totalTickets: 0,
     resolvedTicket: 0,
@@ -14,8 +16,10 @@ const Dashboard = ({ role }) => {
     totalUser: 0,
   });
 
+  // Initial Loading state
   const [isLoading, setIsLoading] = useState(true);
 
+  // Get all data
   useEffect(() => {
     fetch(URL, {
       method: "POST",
@@ -42,6 +46,7 @@ const Dashboard = ({ role }) => {
       });
   }, []);
 
+  // Initial Loading Function
   if (isLoading) {
     return (
       <div className="flex items-center justify-center w-full h-full">
@@ -49,6 +54,7 @@ const Dashboard = ({ role }) => {
       </div>
     );
   }
+
   return (
     <div className="w-full h-full max-h-[100vh] overflow-y-auto scrollbar-hide">
       <div className="lg:min-h-[50vh] md:min-h-[30vh] min-h-[20vh] flex flex-col justify-center items-center w-full bg-black text-black object-cover relative">

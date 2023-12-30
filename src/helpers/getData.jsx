@@ -1,6 +1,7 @@
 import { API } from "./API";
 
 export function CheckSesToken(role) {
+  // API URL to get common data for the users
   const URL = `${API}/${role}/check`;
   let first_name;
 

@@ -4,17 +4,20 @@ import { API } from "../../helpers/API";
 import { useState } from "react";
 
 const ManagerSignup = () => {
-  const URLSignup = `${API}/manager/signup`;
+  // Role Declaration
   const name = "Manager";
+  // Signup API
+  const URLSignup = `${API}/manager/signup`;
+  // Display message and errors
   const [mes, setMes] = useState("");
   const [err, setErr] = useState("");
 
   const navigate = useNavigate();
-
   function handleNavigate() {
     navigate("/manager");
   }
 
+  // Signup function
   function handleSignup(userData) {
     fetch(URLSignup, {
       method: "POST",

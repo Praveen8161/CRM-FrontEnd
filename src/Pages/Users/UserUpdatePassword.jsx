@@ -6,12 +6,16 @@ import { useParams } from "react-router-dom";
 const UserUpdatePassword = () => {
   const { id, token } = useParams();
 
+  // API URL for updating new Password for user
   const URL = `${API}/user/update/${id}/${token}`;
 
+  // Display message and Error on click
   const [err, setErr] = useState("");
   const [mes, setMes] = useState("");
 
+  // Updaing New Password for user
   function handleUpdate(userData) {
+    // Check for empty field
     if (!userData.newPassword) {
       setErr("Fields are required");
       return;
@@ -22,6 +26,7 @@ const UserUpdatePassword = () => {
       return;
     }
 
+    // API Request
     fetch(URL, {
       method: "PATCH",
       headers: {

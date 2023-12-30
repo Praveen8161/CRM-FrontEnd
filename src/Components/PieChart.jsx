@@ -4,12 +4,15 @@ import { useEffect, useState } from "react";
 import { Pie } from "react-chartjs-2";
 
 function PieChart({ role, allData }) {
+  // Get current window width
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+
   useEffect(() => {
     const handleResize = () => setWindowWidth(window.innerWidth);
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
+
   const data = {
     labels: [
       "Total Tickets",

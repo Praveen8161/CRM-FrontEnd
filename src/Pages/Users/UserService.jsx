@@ -2,6 +2,7 @@ import NavBar from "../../Components/NavBar";
 import Service from "../../Components/Service";
 
 const UserService = () => {
+  // role declaring
   const role = "user";
 
   return (

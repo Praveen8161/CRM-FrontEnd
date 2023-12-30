@@ -5,12 +5,16 @@ import CreateService from "./CreateService";
 
 /* eslint-disable react/prop-types */
 const Service = ({ role, handleSerDel }) => {
+  // All services data
   const [allSer, setAllSer] = useState([]);
+  // User Service ID
   const [currSer, setCurrSer] = useState([]);
-
+  //
   const [showAdd, setShowAdd] = useState(false);
+  // Initial Loading
   const [isLoading, setIsLoading] = useState(true);
 
+  // API URL get all Service
   const URL = `${API}/${role}/service/getservices`;
   useEffect(() => {
     fetch(URL, {
@@ -24,10 +28,12 @@ const Service = ({ role, handleSerDel }) => {
       .then((val) => {
         if (val.acknowledged) {
           if (val.userSer && val.userSer.length > 0) {
+            // Updating user services
             val.userSer.forEach((data) => {
               setCurrSer((prev) => [...prev, data._id]);
             });
           }
+          // updating all services
           setAllSer(val.allServices);
         }
         setIsLoading(false);
@@ -38,10 +44,12 @@ const Service = ({ role, handleSerDel }) => {
       });
   }, []);
 
+  // API URL Add new service
   const URLAdd = `${API}/${role}/service/createservice`;
 
   // Add new Service only Admin
   function handleService(serviceName) {
+    // Check empty field
     if (!serviceName) {
       alert("Fields are required");
       return;
@@ -72,9 +80,10 @@ const Service = ({ role, handleSerDel }) => {
       });
   }
 
-  // Add Services to user
+  // Add Services to user upon user request
   function handleNewUserSer(id) {
     alert("it will take few seconds Adding Service ...");
+    // API URL to update new service to user
     let URL = `${API}/user/service/changeservice`;
     fetch(URL, {
       method: "PATCH",
@@ -100,7 +109,7 @@ const Service = ({ role, handleSerDel }) => {
       });
   }
 
-  // Remove Services from user
+  // Remove Services from user upon request
   function handleDelUserSer(id) {
     alert("it will take few seconds Removing Service ...");
     if (currSer.length < 1) {
@@ -108,11 +117,13 @@ const Service = ({ role, handleSerDel }) => {
       return;
     }
 
+    // Update user current service
     const updatedSer = currSer.filter((data) => {
       return data !== id;
     });
-
     setCurrSer(() => updatedSer);
+
+    // URL API to remove service from user
     let URL = `${API}/user/service/changeservice`;
     fetch(URL, {
       method: "PATCH",
@@ -151,6 +162,7 @@ const Service = ({ role, handleSerDel }) => {
     }
   }
 
+  // Initial loading screen
   if (isLoading) {
     return (
       <div className="flex items-center justify-center w-full h-full">
@@ -220,6 +232,7 @@ const Service = ({ role, handleSerDel }) => {
                 </span>
               </p>
 
+              {/* Add or remove service only for User */}
               {role === "user" ? (
                 currSer.includes(val._id) ? (
                   <p>
@@ -244,6 +257,7 @@ const Service = ({ role, handleSerDel }) => {
                 ""
               )}
 
+              {/* See number of people using the service only Admin and Manager */}
               {role !== "user" ? (
                 <>
                   <p>

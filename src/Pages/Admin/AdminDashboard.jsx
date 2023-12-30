@@ -2,6 +2,7 @@ import NavBar from "../../Components/NavBar";
 import Dashboard from "../../Components/Dashboard";
 
 const AdminDashboard = () => {
+  // Role Declaration
   const role = "admin";
 
   return (

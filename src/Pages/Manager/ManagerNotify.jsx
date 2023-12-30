@@ -2,7 +2,9 @@ import NavBar from "../../Components/NavBar";
 import Notification from "../../Components/Notification";
 
 const ManagerNotify = () => {
+  // Role Declaration
   const role = "manager";
+
   return (
     <div className="flex flex-col w-full md:flex-row">
       <div className="md:min-h-screen">

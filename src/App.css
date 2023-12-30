@@ -1,3 +1,4 @@
+/* background for login and signup pages */
 .custom_bg {
   background-image: linear-gradient(
     to left bottom,
@@ -9,6 +10,7 @@
   );
 }
 
+/* Hide Scroll bar for Application pages */
 .scrollbar-hide ::-webkit-scrollbar {
   display: none;
 }

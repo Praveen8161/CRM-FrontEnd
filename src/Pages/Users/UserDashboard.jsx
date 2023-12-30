@@ -2,7 +2,9 @@ import Dashboard from "../../Components/Dashboard";
 import NavBar from "../../Components/NavBar";
 
 const UserDashboard = () => {
+  //Role declaration
   const role = "user";
+
   return (
     <div className="flex flex-col w-full md:flex-row">
       <div className="md:min-h-screen">

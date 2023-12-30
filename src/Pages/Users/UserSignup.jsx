@@ -4,8 +4,12 @@ import { API } from "../../helpers/API";
 import { useState } from "react";
 
 const UserSignup = () => {
-  const URLSignup = `${API}/user/signup`;
   const name = "User";
+
+  // Signup URL
+  const URLSignup = `${API}/user/signup`;
+
+  // For message and error display
   const [mes, setMes] = useState("");
   const [err, setErr] = useState("");
 
@@ -15,6 +19,7 @@ const UserSignup = () => {
     navigate("/");
   }
 
+  // signup
   function handleSignup(userData) {
     fetch(URLSignup, {
       method: "POST",

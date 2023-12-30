@@ -4,23 +4,27 @@ import { API } from "../../helpers/API";
 import { useState } from "react";
 
 const AdminLogin = () => {
+  // Role Declaration
+  const name = "admin";
+  const role = "admin";
+
+  // API URL Login
   const URLLogin = `${API}/admin/login`;
+  // API URL Resend Confirmatio Email
   const URLResend = `${API}/admin/resendemail`;
 
-  const name = "admin";
+  // Display message and errors
   const [mes, setMes] = useState("");
   const [err, setErr] = useState("");
   const [resend, setResend] = useState("");
-  const role = "admin";
 
   const navigate = useNavigate();
-
   function handleNavigate() {
     navigate("/admin/signup");
   }
 
+  // login function
   function handleLogin(userData) {
-    console.log(userData);
     fetch(URLLogin, {
       method: "POST",
       headers: {
@@ -33,7 +37,10 @@ const AdminLogin = () => {
         if (val.acknowledged) {
           setErr("");
           setMes(val.message);
+
+          // setting local storage
           localStorage.setItem("CRMSes", val.sessionToken);
+
           navigate("/admin/dashboard", { replace: true });
         } else {
           if (val.active) {
@@ -50,6 +57,7 @@ const AdminLogin = () => {
       });
   }
 
+  // Resend confirmation email
   function handleResend(userData) {
     setMes("resending Verification email ...");
     fetch(URLResend, {

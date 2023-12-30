@@ -3,9 +3,13 @@ import Service from "../../Components/Service";
 import { API } from "../../helpers/API";
 
 const AdminService = () => {
+  // Role Declaration
   const role = "admin";
+
+  // API URL Service delete
   const URLSerDel = `${API}/${role}/service/deleteservice`;
 
+  // Delete Service function
   async function handleSerDel(id) {
     try {
       const data = await fetch(URLSerDel, {

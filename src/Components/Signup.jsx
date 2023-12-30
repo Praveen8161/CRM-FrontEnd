@@ -10,6 +10,7 @@ const Signup = ({
   setMes,
   setErr,
 }) => {
+  // All user Data
   const [userData, setUserData] = useState({
     email: "",
     first_name: "",
@@ -17,11 +18,13 @@ const Signup = ({
     password: "",
   });
 
+  // Reset Error and message state
   function reset() {
     setMes("");
     setErr("");
   }
 
+  // Check for empty field
   function checkData(uD) {
     for (let i in uD) {
       if (!uD[i]) {
@@ -31,6 +34,7 @@ const Signup = ({
     }
   }
 
+  // Updating user input
   function handleChange(e) {
     reset();
     setUserData((prev) => ({
@@ -39,6 +43,7 @@ const Signup = ({
     }));
   }
 
+  // Handle Signup
   function handleClick() {
     reset();
     let chk = checkData(userData);
@@ -51,6 +56,7 @@ const Signup = ({
     <div className="flex flex-col gap-3 m-auto justify-center items-center px-3 sm:px-5 rounded-lg shadow-[rgba(50,_50,_105,_0.15)_0px_2px_5px_0px,_rgba(0,_0,_0,_0.05)_0px_1px_1px_0px] pt-3 pb-5 bg-slate-200 max-w-[320px]">
       <div className="text-lg font-semibold md:text-xl">{`${name} Signup`}</div>
       <div className="flex flex-col items-center justify-center gap-5">
+        {/* Email field */}
         <div className="relative flex flex-col sm:w-72 w-60">
           <input
             type="text"
@@ -64,6 +70,8 @@ const Signup = ({
             Email
           </span>
         </div>
+
+        {/* First name field */}
         <div className="relative flex flex-col sm:w-72 w-60">
           <input
             type="text"
@@ -77,6 +85,8 @@ const Signup = ({
             First Name
           </span>
         </div>
+
+        {/* Last name field */}
         <div className="relative flex flex-col sm:w-72 w-60">
           <input
             type="text"
@@ -90,6 +100,8 @@ const Signup = ({
             Last Name
           </span>
         </div>
+
+        {/* Password field */}
         <div className="relative flex flex-col sm:w-72 w-60">
           <input
             type="password"
@@ -104,6 +116,7 @@ const Signup = ({
           </span>
         </div>
 
+        {/* Show message and errors */}
         <div className="flex flex-col items-center justify-center gap-2">
           {mes ? (
             <div className="text-xs font-medium text-green-500">{mes}</div>
