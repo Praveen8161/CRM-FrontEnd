@@ -1,6 +1,10 @@
 # CRM - Customer Relation Management
   It's a CRM Application with 3 Roles Users, Managers and Admin with Features of Notification, Tickets, Activity, Services etc...
   Each Roles have a Different Permission to interact with an Application
+
+## Login
+UserName - rkoprvn@gmail.com
+Password - 123
   
 ## Technologies Used
  - React + Vite
